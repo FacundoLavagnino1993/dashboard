@@ -1,0 +1,13 @@
+{
+  "name": "dame_tarea",
+  "description": "tablas",
+  "main": "index.js",
+  "authors": [
+    "facundo lavagnino"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "dependencies": {
+    "angular": "^1.6.4"
+  }
+}
