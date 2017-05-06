@@ -8,13 +8,14 @@
   },
   "author": "facundo lavagnino",
   "license": "ISC",
-    "dependencies": {
+  "dependencies": {
     "body-parser": "^1.17.1",
     "co-router": "^1.0.4",
     "express": "^4.15.2",
     "gulp-concat": "^2.6.1",
     "mongoose": "^4.9.3",
-    "pug": "^2.0.0-beta11"
+    "pug": "^2.0.0-beta11",
+    "request": "^2.81.0"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
