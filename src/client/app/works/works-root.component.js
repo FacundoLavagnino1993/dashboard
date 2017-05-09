@@ -16,7 +16,7 @@
                 workService.getWorks()
                     .then(function done(res){
                         _self.works = res;
-                    }, function fial(error){
+                    }, function fail(error){
                         console.log(error);
                     });
                 return _self.works;

@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 //API routes
-//app.use('/', requir
+app.use('/', require('./work-server/work-route'));
 // e('/'));
 
 //App Routes

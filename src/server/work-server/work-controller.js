@@ -1,10 +1,15 @@
 'use strict';
 
-const worksService = required('./work-service');
+const worksService = require('./work-service');
 
 class workController{
 
-    static get(req,res){
+    static getWorks(req,res){
+        worksService.get(function(response){
+            console.log(response);
+            console.log(response.body);
+            res.json(response);
+        })
 
     }
 
