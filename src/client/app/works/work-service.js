@@ -13,11 +13,20 @@
 
              return $http.get('/workList')
                  .then(function (res){
-                     return res;
+                     return res.data;
                  }, function (err){
                      return err;
                  });
 
+         };
+
+         this.setReserve = function(data){
+             return $http.post('/reserve',data)
+                 .then(function(res){
+                     return res.data;
+                 }, function (err){
+                     return err;
+                 });
          }
      }
 })();
