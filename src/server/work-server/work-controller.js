@@ -21,7 +21,8 @@ class workController{
                 res.json(data);
             })
             .catch((err)=>{
-                res.status(err.code).json(err);
+                res.json(err.data);
+                //res.status(err.code).json(err);
             })
     }
 
