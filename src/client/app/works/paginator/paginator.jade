@@ -1,0 +1,11 @@
+ul(ng-if="($ctrl.pager.pages.length)").pagination
+    li(ng-class="{disabled:$ctrl.pager.currentPage === 1}")
+        a(ng-click="$ctrl.setPage(1)") Primero
+    li(ng-class="{disabled:$ctrl.pager.currentPage === 1}")
+        a(ng-click="$ctrl.setPage($ctrl.pager.currentPage - 1)") Prev
+    li(ng-repeat="page in $ctrl.pager.pages" ng-class="{active:$ctrl.pager.currentPage === page}")
+        a(ng-click="$ctrl.setPage(page)") {{page}}
+    li(ng-class="{disabled:$ctrl.pager.currentPage === $ctrl.pager.totalPages}")
+        a(ng-click="$ctrl.setPage($ctrl.pager.currentPage + 1)") Sig
+    li(ng-class="{disabled:$ctrl.pager.currentPage === $ctrl.pager.totalPages}")
+        a(ng-click="$ctrl.setPage($ctrl.pager.totalPages)") Ultimo

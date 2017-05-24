@@ -7,7 +7,7 @@ table(class="table table-hover")
             th(ng-click="$ctrl.orderBy('country')") Pais <i class="fa fa-caret-down" aria-hidden="true"></i>
             th(ng-click="$ctrl.orderBy('agent')") Agente <i class="fa fa-caret-down" aria-hidden="true"></i>
             th(ng-click="$ctrl.orderBy('dateCreation')") Fecha de creacion <i class="fa fa-caret-down" aria-hidden="true"></i>
-            th(ng-click="$ctrl.orderBy('type')" ) Tipo <i class="fa fa-caret-down" aria-hidden="true"></i>
+            th(ng-click="$ctrl.orderBy('type')" ng-init="$ctrl.timer()") Tipo <i class="fa fa-caret-down" aria-hidden="true"></i>
     tbody
         tr.item-tasks(ng-repeat="item in $ctrl.works.tasks |filterById:($ctrl.filters._id) track by $index")
             td {{$ctrl.itemIsEmpty(item.cart.cart_id)}}
@@ -19,10 +19,6 @@ table(class="table table-hover")
             td {{$ctrl.itemIsEmpty(item.cart.creation_date)}}
             td {{$ctrl.itemIsEmpty(item.state.type)}}
                 span#timer(ng-if="item.state.type=='SNOOZED'")
-ul.pagination
-    li
-        a(href="#") 1
-    li
-        a(href="#") 2
-    li
-        a(href="#") 3
+
+
+

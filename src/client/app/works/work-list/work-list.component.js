@@ -19,20 +19,15 @@
 
 
 
-        this.$onInit = function(){
-        };
-
-
         this.timer = function(){
 
-            countDown = setInterval(function () {
-                count--;
-                if(count==0){
-                    clearInterval(countDown);
-                }
-                console.log(count);
-            },1000);
-
+                countDown = setInterval(function () {
+                    count--;
+                    if(count==0){
+                        clearInterval(countDown);
+                    }
+                    //console.log(count);
+                },1000);
 
         };
 

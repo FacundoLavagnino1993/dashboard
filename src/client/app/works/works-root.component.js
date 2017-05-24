@@ -13,13 +13,14 @@
 
             let _self = this;
 
-
             this.$onInit = function(){
 
                     workService.getWorks()
                         .then(function done(res){
                            // _self.works = JSON.parse(res);
                             _self.works = res;
+
+
                         }, function fail(error){
                             console.log(error);
                         });
@@ -27,8 +28,11 @@
                     _self.filters = {
                         "_id": "",
                     };
-                    return _self.works;
-                };
+
+
+            };
+
+
 
 
        /*    setInterval(function(){
