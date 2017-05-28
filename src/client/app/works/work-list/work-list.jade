@@ -9,7 +9,7 @@ table(class="table table-hover")
             th(ng-click="$ctrl.orderBy('dateCreation')") Fecha de creacion <i class="fa fa-caret-down" aria-hidden="true"></i>
             th(ng-click="$ctrl.orderBy('type')" ng-init="$ctrl.timer()") Tipo <i class="fa fa-caret-down" aria-hidden="true"></i>
     tbody
-        tr.item-tasks(ng-repeat="item in $ctrl.works.tasks |filterById:($ctrl.filters._id) track by $index")
+        tr.item-tasks(ng-repeat="item in $ctrl.works.tasks |filterById:($ctrl.filters._id)|startFromGrid:$ctrl.currentPage * $ctrl.itemsPerPage|limitTo:$ctrl.itemsPerPage track by $index")
             td {{$ctrl.itemIsEmpty(item.cart.cart_id)}}
                 span(ng-click="$ctrl.itemReserve({ $event:{reserve:{cart_id:item.cart.cart_id,user_id:'bot'}}})") Reservar
             td {{$ctrl.itemIsEmpty(item.cart.status)}}
@@ -19,6 +19,9 @@ table(class="table table-hover")
             td {{$ctrl.itemIsEmpty(item.cart.creation_date)}}
             td {{$ctrl.itemIsEmpty(item.state.type)}}
                 span#timer(ng-if="item.state.type=='SNOOZED'")
-
+.btn-group
+    button(type='button' class='btn btn-default' ng-disabled='$ctrl.currentPage == 0' ng-click='$ctrl.currentPage = $ctrl.currentPage -1') &laquo;
+    button(type='button' class='btn btn-default' ng-repeat="page in $ctrl.pages"  ng-click="$ctrl.setPage(page)" ng-class="{active: $ctrl.currentPage + 1 == page}") {{page}}
+    button(type='button' class='btn btn-default' ng-disabled='$ctrl.currentPage >= $ctrl.works.tasks.length/$ctrl.itemsPerPage -1' ng-click='$ctrl.currentPage = $ctrl.currentPage + 1') &raquo
 
 

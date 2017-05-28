@@ -10,13 +10,29 @@
               filters : '<'
             },
             templateUrl: "works/work-list/work-list.html"
+        })
+        .filter('startFromGrid',function(){
+                return function (works,start){
+                    if(works){
+                     start = +start;
+                      return works.slice(start);
+                     }
+                 }
         });
 
     function listController() {
+
+        let self = this;
+
+        //ordenamiento
         let orderDes = true;
+        //cronometro
         let count = 5;
         let countDown;
-
+        //paginador
+        self.currentPage = 0;
+        self.itemsPerPage = 5;
+        self.pages = [];
 
 
         this.timer = function(){
@@ -221,8 +237,54 @@
             }
         };
 
+        this.$onChanges = function(){
+
+            self.confiPages();
+        };
+
+        this.confiPages = function(){
+
+            if(self.works){
+
+                let items = self.works.tasks.length;
+                let totalPages = Math.ceil(items/self.itemsPerPage);
+
+                let startPage, endPage;
+
+                if(totalPages <=10){
+                    startPage = 1;
+                    endPage = totalPages;
+                }else{
+                    if(self.currentPage <= 6){
+                        startPage = 1;
+                        endPage = 10;
+                    } else if(self.currentPage +4 >= totalPages){
+                        startPage = totalPages - 9;
+                        endPage = totalPages;
+                    } else{
+                        startPage = self.currentPage = -5;
+                        endPage = self.currentPage +4;
+                    }
+                }
 
 
+                let i=1;
+
+                while(i <= endPage)
+                {
+                    self.pages.push(i);
+                    i++;
+                }
+
+
+
+            }
+        };
+
+        self.setPage = function(index){
+            console.log(index);
+            self.currentPage = index-1;
+        };
     }
 
 })();

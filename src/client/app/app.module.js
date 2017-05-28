@@ -3,6 +3,6 @@
 
     angular
         .module('app', [
-            'works','filters','paginator'
+            'works','filters'
         ]);
 })();
