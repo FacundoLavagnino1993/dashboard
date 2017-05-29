@@ -1,23 +1,48 @@
 table{
   border: 1px solid black;
+  width: 1200px;
+  .id{
+    width: 20%;
+  }
+  .stateTask{
+    width: 15%;
+  }
+  .channel{
+    width: 11%;
+  }
+  .country{
+    width: 7%;
+  }
+  .user{
+    width: 9%;
+  }
+  .date{
+    width: 18%;
+  }
+  .type{
+    width: 20%;
+  }
   thead{
-    background-color: #e8252e;
+    background-color: #dff0d8;
   }
 
   span{
     float: right;
     position: relative;
-    right: 30%;
     cursor: pointer;
-    border: 2px solid rgba(0, 0, 0, 0.4);
+    border: 1px solid #2e6da4;
     border-radius: 8%;
-    padding: 1px 4px;
-    font-weight: bold;
-    background-color: lightgreen;
+    padding: 6px 12px;
+    background-color: #337ab7;
+    color: #fff;
+    &:hover{
+      background-color: #204d74;
+      border: 1px solid #204d74;
+    }
   }
 
   .fa-caret-down{
-    color: #e8252e;
+    color: #dff0d8;
     transition: color .9s;
     float: right;
   }
@@ -27,7 +52,7 @@ table{
     transition: background-color .9s;
   }
   th:hover{
-    background-color: indianred;
+    background-color: #cddec6;
 
     transition: background-color .3s;
     .fa-caret-down{
@@ -43,4 +68,10 @@ table{
     font-weight: bold;
     color:white;
   }
+
+
+}
+.btn-group{
+  position: relative;
+  left: 40%;
 }

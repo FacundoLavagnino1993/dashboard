@@ -1,24 +1,25 @@
 table(class="table table-hover")
     thead
         tr
-            th(ng-click="$ctrl.orderBy('id')") Id <i class="fa fa-caret-down" aria-hidden="true"></i>
-            th(ng-click="$ctrl.orderBy('status')") Estado de tarea <i class="fa fa-caret-down" aria-hidden="true"></i>
-            th(ng-click="$ctrl.orderBy('channel')") Canal <i class="fa fa-caret-down" aria-hidden="true"></i>
-            th(ng-click="$ctrl.orderBy('country')") Pais <i class="fa fa-caret-down" aria-hidden="true"></i>
-            th(ng-click="$ctrl.orderBy('agent')") Agente <i class="fa fa-caret-down" aria-hidden="true"></i>
-            th(ng-click="$ctrl.orderBy('dateCreation')") Fecha de creacion <i class="fa fa-caret-down" aria-hidden="true"></i>
-            th(ng-click="$ctrl.orderBy('type')" ng-init="$ctrl.timer()") Tipo <i class="fa fa-caret-down" aria-hidden="true"></i>
+            th.id(ng-click="$ctrl.orderBy('id')") Id <i class="fa fa-caret-down" aria-hidden="true"></i>
+            th.stateTask(ng-click="$ctrl.orderBy('status')") Estado de tarea <i class="fa fa-caret-down" aria-hidden="true"></i>
+            th.channel(ng-click="$ctrl.orderBy('channel')") Canal <i class="fa fa-caret-down" aria-hidden="true"></i>
+            th.country(ng-click="$ctrl.orderBy('country')") Pais <i class="fa fa-caret-down" aria-hidden="true"></i>
+            th.user(ng-click="$ctrl.orderBy('agent')") Agente <i class="fa fa-caret-down" aria-hidden="true"></i>
+            th.date(ng-click="$ctrl.orderBy('dateCreation')") Fecha de creacion <i class="fa fa-caret-down" aria-hidden="true"></i>
+            th.type(ng-click="$ctrl.orderBy('type')" ng-init="$ctrl.timer()") Tipo <i class="fa fa-caret-down" aria-hidden="true"></i>
     tbody
         tr.item-tasks(ng-repeat="item in $ctrl.works.tasks |filterById:($ctrl.filters._id)|startFromGrid:$ctrl.currentPage * $ctrl.itemsPerPage|limitTo:$ctrl.itemsPerPage track by $index")
-            td {{$ctrl.itemIsEmpty(item.cart.cart_id)}}
+            td.id {{$ctrl.itemIsEmpty(item.cart.cart_id)}}
                 span(ng-click="$ctrl.itemReserve({ $event:{reserve:{cart_id:item.cart.cart_id,user_id:'bot'}}})") Reservar
-            td {{$ctrl.itemIsEmpty(item.cart.status)}}
-            td {{$ctrl.itemIsEmpty(item.cart.source.channel)}}
-            td {{$ctrl.itemIsEmpty(item.cart.source.country)}}
-            td {{$ctrl.itemIsEmpty(item.state.user_id)}}
-            td {{$ctrl.itemIsEmpty(item.cart.creation_date)}}
-            td {{$ctrl.itemIsEmpty(item.state.type)}}
+            td.stateTask {{$ctrl.itemIsEmpty(item.cart.status)}}
+            td.channel {{$ctrl.itemIsEmpty(item.cart.source.channel)}}
+            td.country {{$ctrl.itemIsEmpty(item.cart.source.country)}}
+            td.user {{$ctrl.itemIsEmpty(item.state.user_id)}}
+            td.date {{$ctrl.itemIsEmpty(item.cart.creation_date)}}
+            td.type#stateType {{$ctrl.itemIsEmpty(item.state.type)}}
                 span#timer(ng-if="item.state.type=='SNOOZED'")
+
 .btn-group
     button(type='button' class='btn btn-default' ng-disabled='$ctrl.currentPage == 0' ng-click='$ctrl.currentPage = $ctrl.currentPage -1') &laquo;
     button(type='button' class='btn btn-default' ng-repeat="page in $ctrl.pages"  ng-click="$ctrl.setPage(page)" ng-class="{active: $ctrl.currentPage + 1 == page}") {{page}}

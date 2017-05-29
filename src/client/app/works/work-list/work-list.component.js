@@ -14,7 +14,7 @@
         .filter('startFromGrid',function(){
                 return function (works,start){
                     if(works){
-                     start = +start;
+                        start = +start;
                       return works.slice(start);
                      }
                  }
@@ -27,23 +27,34 @@
         //ordenamiento
         let orderDes = true;
         //cronometro
-        let count = 5;
+         self.count = 50;
         let countDown;
         //paginador
         self.currentPage = 0;
         self.itemsPerPage = 5;
         self.pages = [];
 
+        this.$onInit = function(){
+
+        };
+
+        this.$onChanges = function(){
+
+            self.confiPages();
+
+        };
 
         this.timer = function(){
+            countDown=setInterval(function(){
+                self.count--;
+                if(document.getElementById('timer'))
+                    document.getElementById('timer').innerHTML = self.count;
+                console.log(self.count);
+                if(self.count==0)
+                    clearInterval(countDown);
+            },1000);
 
-                countDown = setInterval(function () {
-                    count--;
-                    if(count==0){
-                        clearInterval(countDown);
-                    }
-                    //console.log(count);
-                },1000);
+
 
         };
 
@@ -237,10 +248,6 @@
             }
         };
 
-        this.$onChanges = function(){
-
-            self.confiPages();
-        };
 
         this.confiPages = function(){
 
@@ -266,8 +273,6 @@
                         endPage = self.currentPage +4;
                     }
                 }
-
-
                 let i=1;
 
                 while(i <= endPage)
@@ -275,14 +280,11 @@
                     self.pages.push(i);
                     i++;
                 }
-
-
-
             }
         };
 
         self.setPage = function(index){
-            console.log(index);
+
             self.currentPage = index-1;
         };
     }
