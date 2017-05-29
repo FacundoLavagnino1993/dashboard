@@ -9,7 +9,7 @@ table(class="table table-hover")
             th.date(ng-click="$ctrl.orderBy('dateCreation')") Fecha de creacion <i class="fa fa-caret-down" aria-hidden="true"></i>
             th.type(ng-click="$ctrl.orderBy('type')" ng-init="$ctrl.timer()") Tipo <i class="fa fa-caret-down" aria-hidden="true"></i>
     tbody
-        tr.item-tasks(ng-repeat="item in $ctrl.works.tasks |filterById:($ctrl.filters._id)|startFromGrid:$ctrl.currentPage * $ctrl.itemsPerPage|limitTo:$ctrl.itemsPerPage track by $index")
+        tr.item-tasks(ng-repeat="item in $ctrl.works.body |filterById:($ctrl.filters._id)|startFromGrid:$ctrl.currentPage * $ctrl.itemsPerPage|limitTo:$ctrl.itemsPerPage track by $index")
             td.id {{$ctrl.itemIsEmpty(item.cart.cart_id)}}
                 span(ng-click="$ctrl.itemReserve({ $event:{reserve:{cart_id:item.cart.cart_id,user_id:'bot'}}})") Reservar
             td.stateTask {{$ctrl.itemIsEmpty(item.cart.status)}}

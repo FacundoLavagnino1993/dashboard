@@ -24,12 +24,12 @@
 
         let self = this;
 
-        //ordenamiento
+        //orderList
         let orderDes = true;
-        //cronometro
-         self.count = 50;
+        //timer
         let countDown;
-        //paginador
+        self.itemTask = [];
+        //paginator
         self.currentPage = 0;
         self.itemsPerPage = 5;
         self.pages = [];
@@ -45,17 +45,17 @@
         };
 
         this.timer = function(){
+            let count = 50;
+            let now = moment();
+
+
             countDown=setInterval(function(){
-                self.count--;
+                count--;
                 if(document.getElementById('timer'))
-                    document.getElementById('timer').innerHTML = self.count;
-                console.log(self.count);
-                if(self.count==0)
+                    document.getElementById('timer').innerHTML = 0;
+                if(count==0)
                     clearInterval(countDown);
             },1000);
-
-
-
         };
 
 
@@ -73,7 +73,7 @@
                 case "id" :
 
                         if(orderDes){
-                            this.works.tasks.sort(function(a,b){
+                            this.works.body.sort(function(a,b){
                                     if(a.cart.cart_id < b.cart.cart_id)
                                         return -1;
                                     if(a.cart.cart_id > b.cart.cart_id)
@@ -83,7 +83,7 @@
                                 });
                                orderDes=false;
                         }else{
-                            this.works.tasks.sort(function(a,b){
+                            this.works.body.sort(function(a,b){
                                 if(a.cart.cart_id > b.cart.cart_id)
                                     return -1;
                                 if(a.cart.cart_id < b.cart.cart_id)
@@ -98,7 +98,7 @@
                 case "status" :
 
                     if(orderDes){
-                        this.works.tasks.sort(function(a,b){
+                        this.works.body.sort(function(a,b){
                             if(a.cart.status < b.cart.status)
                                 return -1;
                             if(a.cart.status > b.cart.status)
@@ -108,7 +108,7 @@
                         });
                         orderDes=false;
                     }else{
-                        this.works.tasks.sort(function(a,b){
+                        this.works.body.sort(function(a,b){
                             if(a.cart.status > b.cart.status)
                                 return -1;
                             if(a.cart.status < b.cart.status)
@@ -123,7 +123,7 @@
                 case "channel":
 
                     if(orderDes){
-                        this.works.tasks.sort(function(a,b){
+                        this.works.body.sort(function(a,b){
                             if(a.cart.source.channel < b.cart.source.channel)
                                 return -1;
                             if(a.cart.source.channel > b.cart.source.channel)
@@ -133,7 +133,7 @@
                         });
                         orderDes=false;
                     }else{
-                        this.works.tasks.sort(function(a,b){
+                        this.works.body.sort(function(a,b){
                             if(a.cart.source.channel > b.cart.source.channel)
                                 return -1;
                             if(a.cart.source.channel < b.cart.source.channel)
@@ -147,7 +147,7 @@
                     break;
                 case "country":
                     if(orderDes){
-                        this.works.tasks.sort(function(a,b){
+                        this.works.body.sort(function(a,b){
                             if(a.cart.source.country < b.cart.source.country)
                                 return -1;
                             if(a.cart.source.country > b.cart.source.country)
@@ -157,7 +157,7 @@
                         });
                         orderDes=false;
                     }else{
-                        this.works.tasks.sort(function(a,b){
+                        this.works.body.sort(function(a,b){
                             if(a.cart.source.country > b.cart.source.country)
                                 return -1;
                             if(a.cart.source.country < b.cart.source.country)
@@ -171,7 +171,7 @@
                     break;
                 case "agent":
                     if(orderDes){
-                        this.works.tasks.sort(function(a,b){
+                        this.works.body.sort(function(a,b){
                             if(a.state.user_id < b.state.user_id)
                                 return -1;
                             if(a.state.user_id > b.state.user_id)
@@ -181,7 +181,7 @@
                         });
                         orderDes=false;
                     }else{
-                        this.works.tasks.sort(function(a,b){
+                        this.works.body.sort(function(a,b){
                             if(a.state.user_id > b.state.user_id)
                                 return -1;
                             if(a.state.user_id < b.state.user_id)
@@ -195,7 +195,7 @@
                     break;
                 case "dateCreation":
                     if(orderDes){
-                        this.works.tasks.sort(function(a,b) {
+                        this.works.body.sort(function(a,b) {
                             if (a.cart.creation_date < b.cart.creation_date)
                                 return -1;
                             if (a.cart.creation_date > b.cart.creation_date)
@@ -205,7 +205,7 @@
                         });
                         orderDes=false;
                     }else{
-                        this.works.tasks.sort(function(a,b){
+                        this.works.body.sort(function(a,b){
                             if(a.cart.creation_date > b.cart.creation_date)
                                 return -1;
                             if(a.cart.creation_date < b.cart.creation_date)
@@ -222,7 +222,7 @@
 
                     if(orderDes){
 
-                        this.works.tasks.sort(function(a,b){
+                        this.works.body.sort(function(a,b){
                         if(a.state.type < b.state.type)
                             return -1;
                         if(a.state.type > b.state.type)
@@ -232,7 +232,7 @@
                     });
                         orderDes=false;
                     }else{
-                        this.works.tasks.sort(function(a,b){
+                        this.works.body.sort(function(a,b){
                             if(a.state.type > b.state.type)
                                 return -1;
                             if(a.state.type < b.state.type)
@@ -253,7 +253,7 @@
 
             if(self.works){
 
-                let items = self.works.tasks.length;
+                let items = self.works.body.length;
                 let totalPages = Math.ceil(items/self.itemsPerPage);
 
                 let startPage, endPage;
