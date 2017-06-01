@@ -23,16 +23,19 @@
     function listController() {
 
         let self = this;
-
+        let check = true;
         //orderList
         let orderDes = true;
         //timer
         let countDown;
-        self.itemTask = [];
+        let items_timer_snoozed = [];
+        let timer_result = [];
+        this.count = 150;
         //paginator
-        self.currentPage = 0;
-        self.itemsPerPage = 5;
-        self.pages = [];
+        this.currentPage = 0;
+        this.itemsPerPage = 5;
+        this.pages = [];
+
 
         this.$onInit = function(){
 
@@ -44,18 +47,31 @@
 
         };
 
-        this.timer = function(){
-            let count = 50;
-            let now = moment();
 
 
-            countDown=setInterval(function(){
-                count--;
-                if(document.getElementById('timer'))
-                    document.getElementById('timer').innerHTML = 0;
-                if(count==0)
+        this.release_snoozed_timer = function() {
+
+            self.now = moment();
+
+            countDown = setInterval(function () {
+                self.count--;
+                if(document.getElementsByClassName('snoozed')){
+
+                    for(let i=0; i < items_timer_snoozed.length; i++){
+                        timer_result[i] = moment(items_timer_snoozed[i]) - moment();
+                    }
+
+                    document.querySelectorAll('.snoozed')
+                        .forEach(function(item){
+                            console.log(document.querySelectorAll('.snoozed').length);
+                            item.innerHTML = moment(timer_result[1]).format('H:mm:ss');
+                        });
+
+                }
+                if (self.count == 0)
                     clearInterval(countDown);
-            },1000);
+            }, 1000);
+
         };
 
 
@@ -65,6 +81,18 @@
                 return item;
             }
             return item;
+        };
+
+        this.itemSnoozedHandler = function (){
+            if(check){
+                self.works.body.forEach(function(element){
+                   if(element.state.type == 'SNOOZED'){
+                       items_timer_snoozed.push(element.state.release_time);
+                   }
+                });
+                check = false;
+            }
+
         };
 
         this.orderBy = function(action){
@@ -247,7 +275,6 @@
 
             }
         };
-
 
         this.confiPages = function(){
 

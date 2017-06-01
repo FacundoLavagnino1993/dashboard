@@ -18,9 +18,9 @@
                     workService.getWorks()
                         .then(function done(res){
 
-                            _self.works = JSON.parse(res);
+                          _self.works = JSON.parse(res);
                           //  _self.works = res;
-
+                            console.log('api obj');
 
                         }, function fail(error){
                             console.log(error);
@@ -67,7 +67,7 @@
             this.validateReserve = function(reserve){
                 let validate = false;
 
-                angular.forEach(_self.works.tasks,function(value){
+                angular.forEach(_self.works.body,function(value){
                     if(value.cart.cart_id == reserve){
                         if(value.state.type == "RESERVED")
                             validate = true;
