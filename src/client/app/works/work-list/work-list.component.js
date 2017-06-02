@@ -279,10 +279,9 @@
         this.confiPages = function(){
 
             if(self.works){
-              //  let items = self.works.body.length;
-                self.itemsPerPage = self.works.limit;
-                let totalPages = self.works._offset;
-                    //Math.ceil(items/self.itemsPerPage);
+      //          self.itemsPerPage = self.works.limit;
+                let totalPages = self.works.offset.size;
+
                 /*    let startPage, endPage;
 
                if(totalPages <=10){
@@ -303,6 +302,7 @@
                 let i=1;
                 while(i <= totalPages)
                 {
+                    console.log(i);
                     self.pages.push(i);
                     i++;
                 }
@@ -310,8 +310,9 @@
         };
 
         this.setPage = function(index){
-            self.currentPage = index-1;
 
+            self.works.offset.currentPage = index;
+            console.log(self.works.offset.currentPage);
         };
     }
 

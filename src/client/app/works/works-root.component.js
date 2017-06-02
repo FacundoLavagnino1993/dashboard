@@ -19,8 +19,6 @@
                         .then(function done(res){
                           //_self.works = JSON.parse(res);
                             _self.works = res;
-                            console.log(_self.works);
-
                         }, function fail(error){
                             console.log(error);
                         });

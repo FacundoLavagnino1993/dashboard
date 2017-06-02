@@ -9,6 +9,8 @@ class workService {
     static get() {
 
         const self = this;
+        let limit=10;
+        let page=1;
 /*
         return new Promise((fulfill, reject) => {
 
@@ -24,8 +26,7 @@ class workService {
         });*/
                 this.responsePaginated = ()=>{
 
-                    let limit =4;
-                    let page=4;
+
 
                     return {
                         limit: limit,
@@ -33,7 +34,7 @@ class workService {
                             currentPage: page,
                             size: self.totalPages(limit)
                         },
-                        content: self.elementsPaginated(limit,page)
+                        body: self.elementsPaginated(limit,page)
                     }
                 };
 
