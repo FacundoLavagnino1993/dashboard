@@ -17,17 +17,16 @@
 
                     workService.getWorks()
                         .then(function done(res){
-
-                          _self.works = JSON.parse(res);
-                          //  _self.works = res;
-                            console.log('api obj');
+                          //_self.works = JSON.parse(res);
+                            _self.works = res;
+                            console.log(_self.works);
 
                         }, function fail(error){
                             console.log(error);
                         });
 
                     _self.filters = {
-                        "_id": "",
+                        "_id": ""
                     };
 
 
@@ -47,7 +46,11 @@
                 return _self.works;
             },120000);*/
 
-            this.sendReserve = function(data){
+
+
+
+
+        /*    this.sendReserve = function(data){
 
                 if(!this.validateReserve(data.reserve.cart_id))
                 {
@@ -62,9 +65,9 @@
                     alert("La tarea ya esta reservada!");
                 }
 
-            };
+            };*/
 
-            this.validateReserve = function(reserve){
+          /*  this.validateReserve = function(reserve){
                 let validate = false;
 
                 angular.forEach(_self.works.body,function(value){
@@ -75,7 +78,7 @@
                 });
 
                 return validate;
-            }
+            }*/
 
 
 

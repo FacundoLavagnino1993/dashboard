@@ -16,7 +16,7 @@ app.use('/', require('./work-server/work-route'));
 // e('/'));
 
 //App Routes
-app.use('/',function (req, res, next) {
+app.use('/',function (req, res) {
     res.sendFile(path.join(__dirname + '/../../build/index.html'));
 });
 

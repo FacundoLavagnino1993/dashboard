@@ -1,7 +1,7 @@
 .container-fluid
     main.row.work-ctn
         section.work-header.col-md-12
-            filters(filters="$ctrl.filters")
+            filters(filters="$ctrl.filters" works="$ctrl.works")
             work-list(works = '$ctrl.works', item-reserve='$ctrl.sendReserve($event)' filters="$ctrl.filters")
 
 

@@ -23,21 +23,23 @@
     function listController() {
 
         let self = this;
-        let check = true;
+        let check = false;
         //orderList
         let orderDes = true;
         //timer
         let countDown;
+        let timer = [];
         let items_timer_snoozed = [];
         let timer_result = [];
-        this.count = 150;
+        this.count = 1500;
         //paginator
         this.currentPage = 0;
-        this.itemsPerPage = 5;
+
         this.pages = [];
 
-
         this.$onInit = function(){
+
+            this.release_snoozed_timer();
 
         };
 
@@ -46,8 +48,6 @@
             self.confiPages();
 
         };
-
-
 
         this.release_snoozed_timer = function() {
 
@@ -63,8 +63,7 @@
 
                     document.querySelectorAll('.snoozed')
                         .forEach(function(item){
-                            console.log(document.querySelectorAll('.snoozed').length);
-                            item.innerHTML = moment(timer_result[1]).format('H:mm:ss');
+                            item.innerHTML = moment(timer_result[0]).format('H : mm : ss');
                         });
 
                 }
@@ -84,14 +83,15 @@
         };
 
         this.itemSnoozedHandler = function (){
-            if(check){
+           // if(!check){
+                console.log(1);
                 self.works.body.forEach(function(element){
                    if(element.state.type == 'SNOOZED'){
                        items_timer_snoozed.push(element.state.release_time);
                    }
                 });
-                check = false;
-            }
+            //    check = true;
+            //}
 
         };
 
@@ -279,30 +279,29 @@
         this.confiPages = function(){
 
             if(self.works){
+              //  let items = self.works.body.length;
+                self.itemsPerPage = self.works.limit;
+                let totalPages = self.works._offset;
+                    //Math.ceil(items/self.itemsPerPage);
+                /*    let startPage, endPage;
 
-                let items = self.works.body.length;
-                let totalPages = Math.ceil(items/self.itemsPerPage);
-
-                let startPage, endPage;
-
-                if(totalPages <=10){
+               if(totalPages <=10){
                     startPage = 1;
                     endPage = totalPages;
                 }else{
-                    if(self.currentPage <= 6){
-                        startPage = 1;
-                        endPage = 10;
+                    if(self.currentPage == 0){
+                        startPage = 2;
+                                  endPage = totalPages;
                     } else if(self.currentPage +4 >= totalPages){
                         startPage = totalPages - 9;
                         endPage = totalPages;
                     } else{
-                        startPage = self.currentPage = -5;
+                       startPage = self.currentPage = -5;
                         endPage = self.currentPage +4;
                     }
-                }
+                }*/
                 let i=1;
-
-                while(i <= endPage)
+                while(i <= totalPages)
                 {
                     self.pages.push(i);
                     i++;
@@ -310,9 +309,9 @@
             }
         };
 
-        self.setPage = function(index){
-
+        this.setPage = function(index){
             self.currentPage = index-1;
+
         };
     }
 

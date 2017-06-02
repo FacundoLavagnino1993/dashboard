@@ -15,7 +15,7 @@ class workController{
 
     }
 
-    static postReserve(req,res){
+   /* static postReserve(req,res){
         worksService.Reserve(req)
             .then((data)=>{
                 res.json(data);
@@ -24,7 +24,7 @@ class workController{
                 res.json(err.data);
                 //res.status(err.code).json(err);
             })
-    }
+    }*/
 
 }
 
