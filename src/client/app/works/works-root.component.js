@@ -13,28 +13,38 @@
 
             let _self = this;
 
+
             this.$onInit = function(){
 
                     workService.getWorks()
                         .then(function done(res){
                           //_self.works = JSON.parse(res);
                             _self.works = res;
+                            _self.release_timer_snoozed();
                         }, function fail(error){
                             console.log(error);
                         });
-
                     _self.filters = {
                         "_id": ""
                     };
 
+            };
+
+            this.worksPaginated = function(data){
+
+                workService.getWorksPaginated(data)
+                    .then(function done(res){
+                        _self.works.body = res.body;
+                        _self.release_timer_snoozed();
+                }, function fail(error){
+                    console.log(error);
+                });
 
             };
 
 
-
-
        /*    setInterval(function(){
-                workService.getWorks()
+                workService.getTasks()
                     .then(function done(res){
                         _self.works = res;
                     }, function fail(error){
@@ -78,7 +88,19 @@
                 return validate;
             }*/
 
+            this.release_timer_snoozed = function() {
+                _self.items_snoozed=[];
+                if (_self.works){
+                    angular.forEach(_self.works.body, function(element){
+
+                        if(element.state.type == 'SNOOZED'){
+                            _self.items_snoozed.push(element);
+                        }
+                    });
+                }
 
 
+                console.log(_self.items_snoozed);
+            }
         }
 })();

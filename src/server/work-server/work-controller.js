@@ -4,8 +4,8 @@ const worksService = require('./work-service');
 
 class workController{
 
-    static getWorks(req,res){
-        worksService.get()
+    static getTasks(req, res){
+        worksService.getAll()
             .then((data)=>{
                 res.json(data);
             })
@@ -13,6 +13,17 @@ class workController{
                 res.status(err.code).json(err);
             });
 
+    }
+
+    static getWorksPaginated(req,res){
+
+        worksService.getPaginationResult(req)
+            .then((data)=>{
+                res.json(data);
+            })
+            .catch((err)=>{
+                res.statusCode(err.code);
+            });
     }
 
    /* static postReserve(req,res){

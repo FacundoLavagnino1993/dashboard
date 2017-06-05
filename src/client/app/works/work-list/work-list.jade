@@ -25,8 +25,8 @@ table(class="table table-hover" )
                 span.snoozed(ng-if="item.state.type=='SNOOZED'")
 
 .btn-group
-    button(type='button' class='btn btn-default' ng-disabled='$ctrl.works.offset.currentPage == 1' ng-click='$ctrl.works.offset.currentPage = $ctrl.works.offset.currentPage -1') &laquo;
-    button(type='button' class='btn btn-default' ng-repeat="page in $ctrl.pages"  ng-click="$ctrl.setPage(page)" ng-class="{active: $ctrl.works.offset.currentPage == page}") {{page}}
-    button(type='button' class='btn btn-default' ng-disabled='$ctrl.works.offset.currentPage >= $ctrl.works.offset.size' ng-click='$ctrl.works.offset.currentPage = $ctrl.works.offset.currentPage + 1') &raquo
+    button(type='button' class='btn btn-default' ng-disabled='$ctrl.works.offset.currentPage == 1' ng-click='$ctrl.setPage($ctrl.works.offset.currentPage - 1)') &laquo;
+    button(type='button' ng-repeat="page in $ctrl.pages track by $index" class='btn btn-default' ng-click="$ctrl.setPage(page)" ng-class="{active: $ctrl.works.offset.currentPage == page}") {{page}}
+    button(type='button' class='btn btn-default' ng-disabled='$ctrl.works.offset.currentPage >= $ctrl.works.offset.size' ng-click='$ctrl.setPage($ctrl.works.offset.currentPage + 1)') &raquo
 
 
