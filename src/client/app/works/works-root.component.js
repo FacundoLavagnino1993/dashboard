@@ -12,8 +12,8 @@
         function worksRootController(workService){
 
             let _self = this;
-
-
+            let count = 0;
+            this.data = {currentPage : 1};
             this.$onInit = function(){
 
                     workService.getWorks()
@@ -31,7 +31,7 @@
             };
 
             this.worksPaginated = function(data){
-
+                _self.data = data;
                 workService.getWorksPaginated(data)
                     .then(function done(res){
                         _self.works.body = res.body;
@@ -42,21 +42,19 @@
 
             };
 
-
-       /*    setInterval(function(){
-                workService.getTasks()
+           setInterval(function(){
+               //debugger
+               //console.log(_self.data);
+                workService.getWorksPaginated(_self.data)
                     .then(function done(res){
-                        _self.works = res;
+                        _self.works.body = res.body;
+                    _self.release_timer_snoozed();
                     }, function fail(error){
                         console.log(error);
                     });
                 console.log("refresh ok");
                 return _self.works;
-            },120000);*/
-
-
-
-
+            },5000);
 
         /*    this.sendReserve = function(data){
 
@@ -89,18 +87,19 @@
             }*/
 
             this.release_timer_snoozed = function() {
-                _self.items_snoozed=[];
-                if (_self.works){
-                    angular.forEach(_self.works.body, function(element){
 
-                        if(element.state.type == 'SNOOZED'){
-                            _self.items_snoozed.push(element);
-                        }
-                    });
+                if (_self.works) {
+                    setInterval(()=>{
+                        angular.forEach(_self.works.body, function (element) {
+                            count ++;
+                            if(element.state.type == 'SNOOZED'){
+                                document.getElementById(element.cart.cart_id)
+                                    .innerHTML = moment(moment(element.state.release_time) - moment()).format('h:mm:ss');
+                            }
+                        });
+                    },1000);
+
                 }
-
-
-                console.log(_self.items_snoozed);
-            }
+            };
         }
 })();

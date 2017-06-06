@@ -21,8 +21,8 @@ table(class="table table-hover" )
             td.date {{$ctrl.itemIsEmpty(item.cart.creation_date)}}
             td.product {{$ctrl.itemIsEmpty(item.cart.reservations[0].product)}}
             td.stage {{$ctrl.itemIsEmpty(item.cart.stage)}}
-            td.type#stateType {{$ctrl.itemIsEmpty(item.state.type)}}
-                span.snoozed(ng-if="item.state.type=='SNOOZED'")
+            td.type {{$ctrl.itemIsEmpty(item.state.type)}}
+                span.snoozed(ng-if="item.state.type=='SNOOZED'" ng-attr-id="{{item.cart.cart_id}}")
 
 .btn-group
     button(type='button' class='btn btn-default' ng-disabled='$ctrl.works.offset.currentPage == 1' ng-click='$ctrl.setPage($ctrl.works.offset.currentPage - 1)') &laquo;

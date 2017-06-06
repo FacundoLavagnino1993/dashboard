@@ -26,34 +26,23 @@
     function listController() {
 
         let self = this;
-
         //orderList
         let orderDes = true;
-
-        //timer
-        let countDown;
-        let timer = [];
-        let items_timer_snoozed = [];
-        let timer_result = [];
-        this.count = 1500;
-
         //paginator
         this.currentPage = 0;
         this.pages = [];
 
         this.$onInit = function(){
 
-
         };
 
         this.$onChanges = function(){
 
             self.confiPages();
-         //   self.release_snoozed_timer();
 
         };
 
-        this.setTimer = function() {
+     /*   this.setTimer = function() {
 
             if(self.items_snoozed){
                 angular.forEach(self.works.body,function(element){
@@ -81,7 +70,7 @@
                 }, 1000);
             }
 
-        };
+        };*/
 
 
         this.itemIsEmpty = function (item){
