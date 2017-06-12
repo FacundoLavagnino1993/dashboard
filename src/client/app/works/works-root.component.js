@@ -3,58 +3,54 @@
     angular
         .module('works')
         .component('worksRoot', {
-            controller: worksRootController,
+            controller: WorksRootController,
             templateUrl: "works/works-root.html"
             });
 
-    worksRootController.$inject = ['workService'];
+    WorksRootController.$inject = ['workService','$scope'];
 
-        function worksRootController(workService){
+        function WorksRootController(workService,$scope){
 
             let _self = this;
-            let count = 0;
             this.data = {currentPage : 1};
-            this.$onInit = function(){
 
+
+            this.$onInit = function(){
                     workService.getWorks()
                         .then(function done(res){
-                          //_self.works = JSON.parse(res);
                             _self.works = res;
-                            _self.release_timer_snoozed();
+                            _self.itemsListHandler();
                         }, function fail(error){
                             console.log(error);
                         });
                     _self.filters = {
                         "_id": ""
                     };
-
             };
-
+/*
             this.worksPaginated = function(data){
                 _self.data = data;
                 workService.getWorksPaginated(data)
                     .then(function done(res){
                         _self.works.body = res.body;
-                        _self.release_timer_snoozed();
+                        _self.itemsListHandler();
                 }, function fail(error){
                     console.log(error);
                 });
 
-            };
+            };*/
 
-           setInterval(function(){
-               //debugger
-               //console.log(_self.data);
+        /*   setInterval(function(){
+
                 workService.getWorksPaginated(_self.data)
                     .then(function done(res){
                         _self.works.body = res.body;
-                    _self.release_timer_snoozed();
                     }, function fail(error){
                         console.log(error);
                     });
-                console.log("refresh ok");
+                console.log("refresh page "+_self.data.currentPage);
                 return _self.works;
-            },5000);
+            },5000);*/
 
         /*    this.sendReserve = function(data){
 
@@ -86,19 +82,41 @@
                 return validate;
             }*/
 
-            this.release_timer_snoozed = function() {
-
+            this.itemsListHandler = function(){
                 if (_self.works) {
+
                     setInterval(()=>{
                         angular.forEach(_self.works.body, function (element) {
-                            count ++;
-                            if(element.state.type == 'SNOOZED'){
-                                document.getElementById(element.cart.cart_id)
-                                    .innerHTML = moment(moment(element.state.release_time) - moment()).format('h:mm:ss');
+                            if(document.getElementById(element.cart.cart_id) == null){
+                                return;
+                            }else{
+                                _self.release_timer_snoozed(element);
                             }
                         });
                     },1000);
 
+                }
+            };
+
+            this.listIsEmpty = function(){
+
+                if(!(document.getElementById('element'))){
+                    _self.listEmpty = true;
+                    document.getElementById('msg-empty-list').style.display = "inline";
+
+                }else{
+                    document.getElementById('msg-empty-list').style.display = "none";
+
+                }
+            };
+
+            this.release_timer_snoozed = function(element) {
+
+                if(element.state.type == 'SNOOZED'){
+                    document.getElementById(element.cart.cart_id)
+                        .innerHTML = moment(moment(element.state.release_time) - moment()).format('h:mm:ss');
+                }else{
+                    return;
                 }
             };
         }

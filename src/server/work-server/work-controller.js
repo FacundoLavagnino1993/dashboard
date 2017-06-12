@@ -5,7 +5,7 @@ const worksService = require('./work-service');
 class workController{
 
     static getTasks(req, res){
-        worksService.getAll()
+        worksService.apiTasks()
             .then((data)=>{
                 res.json(data);
             })

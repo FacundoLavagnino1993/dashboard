@@ -1,32 +1,37 @@
-table(class="table table-hover" )
+table.tasks(class="table table-hover")
     thead
         tr
             th.id(ng-click="$ctrl.orderBy('id')") Id <i class="fa fa-caret-down" aria-hidden="true"></i>
+            th.typeTask(ng-click="$ctrl.orderBy('typeTask')") Tipo <i class="fa fa-caret-down" aria-hidden="true"></i>
+            th.stage(ng-click="$ctrl.orderBy('stage')") Etapa <i class="fa fa-caret-down" aria-hidden="true"></i>
             th.stateTask(ng-click="$ctrl.orderBy('status')") Estado <i class="fa fa-caret-down" aria-hidden="true"></i>
             th.channel(ng-click="$ctrl.orderBy('channel')") Canal <i class="fa fa-caret-down" aria-hidden="true"></i>
             th.country(ng-click="$ctrl.orderBy('country')") Pais <i class="fa fa-caret-down" aria-hidden="true"></i>
             th.user(ng-click="$ctrl.orderBy('agent')") Agente <i class="fa fa-caret-down" aria-hidden="true"></i>
             th.date(ng-click="$ctrl.orderBy('dateCreation')") Fecha de creacion <i class="fa fa-caret-down" aria-hidden="true"></i>
             th.product(ng-click="$ctrl.orderBy('product')") Producto <i class="fa fa-caret-down" aria-hidden="true"></i>
-            th.stage(ng-click="$ctrl.orderBy('stage')") Etapa <i class="fa fa-caret-down" aria-hidden="true"></i>
-            th.type(ng-click="$ctrl.orderBy('type')") Tipo <i class="fa fa-caret-down" aria-hidden="true"></i>
-    tbody
-        tr.item-tasks(ng-repeat="item in $ctrl.works.body |filterById:($ctrl.filters._id)|startFromGrid:$ctrl.currentPage * $ctrl.itemsPerPage|limitTo:$ctrl.works.limit track by $index")
+            th.availability(ng-click="$ctrl.orderBy('availability')") Disponibilidad <i class="fa fa-caret-down" aria-hidden="true"></i>
+    tbody(ng-show="!($ctrl.listIsEmpty())")
+        tr.item-tasks(ng-attr-id="element" ng-repeat="item in $ctrl.tasksBackup |filterById:($ctrl.filters._id)|startFromGrid:$ctrl.currentPage * $ctrl.itemsPerPage|limitTo:$ctrl.works.limit track by $index")
             td.id {{$ctrl.itemIsEmpty(item.cart.cart_id)}}
                 //.reserve(ng-click="$ctrl.itemReserve({ $event:{reserve:{cart_id:item.cart.cart_id,user_id:'bot'}}})") Reservar
+            td.typeTask {{$ctrl.itemIsEmpty(item.type)}}
+            td.stage {{$ctrl.itemIsEmpty(item.cart.stage)}}
             td.stateTask {{$ctrl.itemIsEmpty(item.cart.status)}}
             td.channel {{$ctrl.itemIsEmpty(item.cart.source.channel)}}
             td.country {{$ctrl.itemIsEmpty(item.cart.source.country)}}
             td.user {{$ctrl.itemIsEmpty(item.state.user_id)}}
             td.date {{$ctrl.itemIsEmpty(item.cart.creation_date)}}
             td.product {{$ctrl.itemIsEmpty(item.cart.reservations[0].product)}}
-            td.stage {{$ctrl.itemIsEmpty(item.cart.stage)}}
-            td.type {{$ctrl.itemIsEmpty(item.state.type)}}
+            td.availability {{$ctrl.itemIsEmpty(item.state.type)}}
                 span.snoozed(ng-if="item.state.type=='SNOOZED'" ng-attr-id="{{item.cart.cart_id}}")
 
+#msg-empty-list
+    p El ID ingresado no se encuentra en el registro.
+
 .btn-group
-    button(type='button' class='btn btn-default' ng-disabled='$ctrl.works.offset.currentPage == 1' ng-click='$ctrl.setPage($ctrl.works.offset.currentPage - 1)') &laquo;
+    button.back-next(type='button' class='btn btn-default' ng-disabled='$ctrl.works.offset.currentPage == 1' ng-click='$ctrl.setPage($ctrl.works.offset.currentPage - 1)') &laquo;
     button(type='button' ng-repeat="page in $ctrl.pages track by $index" class='btn btn-default' ng-click="$ctrl.setPage(page)" ng-class="{active: $ctrl.works.offset.currentPage == page}") {{page}}
-    button(type='button' class='btn btn-default' ng-disabled='$ctrl.works.offset.currentPage >= $ctrl.works.offset.size' ng-click='$ctrl.setPage($ctrl.works.offset.currentPage + 1)') &raquo
+    button.back-next(type='button' class='btn btn-default' ng-disabled='$ctrl.works.offset.currentPage >= $ctrl.works.offset.size' ng-click='$ctrl.setPage($ctrl.works.offset.currentPage + 1)') &raquo
 
 

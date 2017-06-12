@@ -11,11 +11,11 @@
             return (works,_id)=>{
                 if(works){
                     return works.filter(function(item){
-                        return item.cart.cart_id.toLowerCase().indexOf(_id.toLowerCase()) != -1;
+                       if(item.cart.cart_id.toLowerCase().indexOf(_id.toLowerCase()) != -1)
+                           return item;
                     })
                 }
             }
     });
-
 
 })();
