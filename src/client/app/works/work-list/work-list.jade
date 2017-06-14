@@ -1,3 +1,5 @@
+span#refresh Actualizar&nbsp
+    button(type="button" ng-click="$ctrl.refreshPage()") <i class="fa fa-refresh" aria-hidden="true"></i>
 table.tasks(class="table table-hover")
     thead
         tr
@@ -12,7 +14,7 @@ table.tasks(class="table table-hover")
             th.product(ng-click="$ctrl.orderBy('product')") Producto <i class="fa fa-caret-down" aria-hidden="true"></i>
             th.availability(ng-click="$ctrl.orderBy('availability')") Disponibilidad <i class="fa fa-caret-down" aria-hidden="true"></i>
     tbody(ng-show="!($ctrl.listIsEmpty())")
-        tr.item-tasks(ng-attr-id="element" ng-repeat="item in $ctrl.tasksBackup |filterById:($ctrl.filters._id)|startFromGrid:$ctrl.currentPage * $ctrl.itemsPerPage|limitTo:$ctrl.works.limit track by $index")
+        tr.item-tasks(ng-attr-id="element" ng-repeat="item in $ctrl.tasksPaginated |startFromGrid:$ctrl.currentPage * $ctrl.itemsPerPage|limitTo:$ctrl.works.limit track by $index")
             td.id {{$ctrl.itemIsEmpty(item.cart.cart_id)}}
                 //.reserve(ng-click="$ctrl.itemReserve({ $event:{reserve:{cart_id:item.cart.cart_id,user_id:'bot'}}})") Reservar
             td.typeTask {{$ctrl.itemIsEmpty(item.type)}}
@@ -28,10 +30,12 @@ table.tasks(class="table table-hover")
 
 #msg-empty-list
     p El ID ingresado no se encuentra en el registro.
-
+#msg-loading
+    <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+    p.loading Cargando...
 .btn-group
     button.back-next(type='button' class='btn btn-default' ng-disabled='$ctrl.works.offset.currentPage == 1' ng-click='$ctrl.setPage($ctrl.works.offset.currentPage - 1)') &laquo;
-    button(type='button' ng-repeat="page in $ctrl.pages track by $index" class='btn btn-default' ng-click="$ctrl.setPage(page)" ng-class="{active: $ctrl.works.offset.currentPage == page}") {{page}}
+    button(type='button' ng-repeat="page in $ctrl.pagination.pages track by $index" class='btn btn-default' ng-click="$ctrl.setPage(page)" ng-class="{active: $ctrl.works.offset.currentPage == page}") {{page}}
     button.back-next(type='button' class='btn btn-default' ng-disabled='$ctrl.works.offset.currentPage >= $ctrl.works.offset.size' ng-click='$ctrl.setPage($ctrl.works.offset.currentPage + 1)') &raquo
 
 

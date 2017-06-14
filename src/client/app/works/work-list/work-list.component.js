@@ -6,9 +6,11 @@
             controller: ListController,
             bindings:{
               works : '<',
-              itemReserve : '&',
               filters : '<',
-              listEmpty : '<'
+              listEmpty : '<',
+              tasksPaginated : '<',
+              tasksFiltered : '<',
+              pagination : '<'
             },
             require:{
                 WorksRootController : '^worksRoot'
@@ -30,24 +32,25 @@
 
         let self = this;
         //orderList
-        let orderDes = true;
+        let orderDown = false;
         //paginator
         this.currentPage = 0;
-        this.pages = [];
-        this.tasksBackup=[];
 
 
-        this.$onChanges = function(){
+        this.$onChanges = ()=>{
 
             self.confiPages();
-            if(self.works){
-                this.tasksBackup = self.works.body.slice((self.works.limit*1)-self.works.limit,(self.works.limit*1));
-            }
-
         };
 
-        this.itemIsEmpty = function (item){
+        this.refreshPage = ()=>{
+            self.pagination.pages = [];
+            self.tasksPaginated = [];
+            self.works = [];
+            document.getElementById('msg-loading').style.display = "inline";
+            self.WorksRootController.getTasks();
+        };
 
+        this.itemIsEmpty = (item)=>{
 
             if(!(item)){
                 item = "-";
@@ -57,228 +60,107 @@
 
         };
 
-        this.orderBy = function(action){
 
+        this.orderBy = (action)=>{
+            if(self.WorksRootController.optimized)
+                orderDown === false ? orderTasksDown(self.tasksFiltered,action) : orderTasksUp(self.tasksFiltered,action);
+            else
+                orderDown === false ? orderTasksDown(self.works.body,action) : orderTasksUp(self.works.body,action);
+        };
+
+        let orderTasksDown =(tasks,action)=>{
             switch (action){
-                case "id" :
 
-                        if(orderDes){
-                            this.works.body.sort(function(a,b){
-                                    if(a.cart.cart_id < b.cart.cart_id)
-                                        return -1;
-                                    if(a.cart.cart_id > b.cart.cart_id)
-                                        return 1;
-                                    if(a.cart.cart_id == b.cart.cart_id)
-                                        return 0;
-                                });
-                            self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                               orderDes=false;
-                        }else{
-                            this.works.body.sort(function(a,b){
-                                if(a.cart.cart_id > b.cart.cart_id)
-                                    return -1;
-                                if(a.cart.cart_id < b.cart.cart_id)
-                                    return 1;
-                                if(a.cart.cart_id == b.cart.cart_id)
-                                    return 0;
-                            });
-                            self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                            orderDes=true;
-                        }
+                case 'id':
+                    tasks.sort(function(a,b){
+                        if(a.cart.cart_id < b.cart.cart_id)
+                            return -1;
+                        if(a.cart.cart_id > b.cart.cart_id)
+                            return 1;
+                        if(a.cart.cart_id == b.cart.cart_id)
+                            return 0;
+                    });
                     break;
 
-                case "status" :
-
-                    if(orderDes){
-                        this.works.body.sort(function(a,b){
-                            if(a.cart.status < b.cart.status)
-                                return -1;
-                            if(a.cart.status > b.cart.status)
-                                return 1;
-                            if(a.cart.status == b.cart.status)
-                                return 0;
-                        });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                        orderDes=false;
-                    }else{
-                        this.works.body.sort(function(a,b){
-                            if(a.cart.status > b.cart.status)
-                                return -1;
-                            if(a.cart.status < b.cart.status)
-                                return 1;
-                            if(a.cart.status == b.cart.status)
-                                return 0;
-                        });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                        orderDes=true;
-                    }
-
-                    break;
-                case "channel":
-
-                    if(orderDes){
-                        this.works.body.sort(function(a,b){
-                            if(a.cart.source.channel < b.cart.source.channel)
-                                return -1;
-                            if(a.cart.source.channel > b.cart.source.channel)
-                                return 1;
-                            if(a.cart.source.channel == b.cart.source.channel)
-                                return 0;
-                        });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                        orderDes=false;
-                    }else{
-                        this.works.body.sort(function(a,b){
-                            if(a.cart.source.channel > b.cart.source.channel)
-                                return -1;
-                            if(a.cart.source.channel < b.cart.source.channel)
-                                return 1;
-                            if(a.cart.source.channel == b.cart.source.channel)
-                                return 0;
-                        });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                        orderDes=true;
-                    }
-
-                    break;
-                case "country":
-                    if(orderDes){
-                        this.works.body.sort(function(a,b){
-                            if(a.cart.source.country < b.cart.source.country)
-                                return -1;
-                            if(a.cart.source.country > b.cart.source.country)
-                                return 1;
-                            if(a.cart.source.country == b.cart.source.country)
-                                return 0;
-                        });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                        orderDes=false;
-                    }else{
-                        this.works.body.sort(function(a,b){
-                            if(a.cart.source.country > b.cart.source.country)
-                                return -1;
-                            if(a.cart.source.country < b.cart.source.country)
-                                return 1;
-                            if(a.cart.source.country == b.cart.source.country)
-                                return 0;
-                        });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                        orderDes=true;
-                    }
-
-                    break;
-                case "agent":
-                    if(orderDes){
-                        this.works.body.sort(function(a,b){
-                            if(a.state.user_id < b.state.user_id)
-                                return -1;
-                            if(a.state.user_id > b.state.user_id)
-                                return 1;
-                            if(a.state.user_id == b.state.user_id)
-                                return 0;
-                        });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                        orderDes=false;
-                    }else{
-                        this.works.body.sort(function(a,b){
-                            if(a.state.user_id > b.state.user_id)
-                                return -1;
-                            if(a.state.user_id < b.state.user_id)
-                                return 1;
-                            if(a.state.user_id == b.state.user_id)
-                                return 0;
-                        });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                        orderDes=true;
-                    }
-
-                    break;
-                case "dateCreation":
-                    if(orderDes){
-                        this.works.body.sort(function(a,b) {
-                            if (a.cart.creation_date < b.cart.creation_date)
-                                return -1;
-                            if (a.cart.creation_date > b.cart.creation_date)
-                                return 1;
-                            if (a.cart.creation_date == b.cart.creation_date)
-                                return 0;
-                        });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-
-                        orderDes=false;
-                    }else{
-                        this.works.body.sort(function(a,b){
-                            if(a.cart.creation_date > b.cart.creation_date)
-                                return -1;
-                            if(a.cart.creation_date < b.cart.creation_date)
-                                return 1;
-                            if(a.cart.creation_date == b.cart.creation_date)
-                                return 0;
-                        });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-
-                        orderDes=true;
-                    }
-
-                    break;
-                case "product":
-                    if(orderDes){
-
-                        this.works.body.sort(function(a,b){
-                            if(a.cart.reservations[0].product < b.cart.reservations[0].product)
-                                return -1;
-                            if(a.cart.reservations[0].product > b.cart.reservations[0].product)
-                                return 1;
-                            if(a.cart.reservations[0].product == b.cart.reservations[0].product)
-                                return 0;
-                        });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                        orderDes=false;
-                    }else{
-                        this.works.body.sort(function(a,b){
-                            if(a.cart.reservations[0].product > b.cart.reservations[0].product)
-                                return -1;
-                            if(a.cart.reservations[0].product < b.cart.reservations[0].product)
-                                return 1;
-                            if(a.cart.reservations[0].product == b.cart.reservations[0].product)
-                                return 0;
-                        });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                        orderDes=true;
-                    }
+                case 'status':
+                    tasks.sort(function(a,b){
+                        if(a.cart.status < b.cart.status)
+                            return -1;
+                        if(a.cart.status > b.cart.status)
+                            return 1;
+                        if(a.cart.status == b.cart.status)
+                            return 0;
+                    });
                     break;
 
-                case "stage":
-                    if(orderDes){
-
-                        this.works.body.sort(function(a,b){
-                            if(a.cart.stage < b.cart.stage)
-                                return -1;
-                            if(a.cart.stage > b.cart.stage)
-                                return 1;
-                            if(a.cart.stage == b.cart.stage)
-                                return 0;
-                        });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                        orderDes=false;
-                    }else{
-                        this.works.body.sort(function(a,b){
-                            if(a.cart.stage > b.cart.stage)
-                                return -1;
-                            if(a.cart.stage < b.cart.stage)
-                                return 1;
-                            if(a.cart.stage == b.cart.stage)
-                                return 0;
-                        });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                        orderDes=true;
-                    }
+                case 'channel':
+                    tasks.sort(function(a,b){
+                        if(a.cart.source.channel < b.cart.source.channel)
+                            return -1;
+                        if(a.cart.source.channel > b.cart.source.channel)
+                            return 1;
+                        if(a.cart.source.channel == b.cart.source.channel)
+                            return 0;
+                    });
                     break;
-                case "availability":
 
-                    if(orderDes){
+                case 'country':
+                    tasks.sort(function(a,b){
+                        if(a.cart.source.country < b.cart.source.country)
+                            return -1;
+                        if(a.cart.source.country > b.cart.source.country)
+                            return 1;
+                        if(a.cart.source.country == b.cart.source.country)
+                            return 0;
+                    });
+                    break;
 
-                        this.works.body.sort(function(a,b){
+                case 'agent':
+                    tasks.sort(function(a,b){
+                        if(a.state.user_id < b.state.user_id)
+                            return -1;
+                        if(a.state.user_id > b.state.user_id)
+                            return 1;
+                        if(a.state.user_id == b.state.user_id)
+                            return 0;
+                    });
+                    break;
+
+                case 'dateCreation':
+                    tasks.sort(function(a,b) {
+                        if (a.cart.creation_date < b.cart.creation_date)
+                            return -1;
+                        if (a.cart.creation_date > b.cart.creation_date)
+                            return 1;
+                        if (a.cart.creation_date == b.cart.creation_date)
+                            return 0;
+                    });
+                    break;
+
+                case 'product':
+                    tasks.sort(function(a,b){
+                        if(a.cart.reservations[0].product < b.cart.reservations[0].product)
+                            return -1;
+                        if(a.cart.reservations[0].product > b.cart.reservations[0].product)
+                            return 1;
+                        if(a.cart.reservations[0].product == b.cart.reservations[0].product)
+                            return 0;
+                    });
+                    break;
+
+                case 'stage':
+                    tasks.sort(function(a,b){
+                        if(a.cart.stage < b.cart.stage)
+                            return -1;
+                        if(a.cart.stage > b.cart.stage)
+                            return 1;
+                        if(a.cart.stage == b.cart.stage)
+                            return 0;
+                    });
+                    break;
+
+                case 'availability':
+                    tasks.sort(function(a,b){
                         if(a.state.type < b.state.type)
                             return -1;
                         if(a.state.type > b.state.type)
@@ -286,76 +168,165 @@
                         if(a.state.type == b.state.type)
                             return 0;
                     });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                        orderDes=false;
-                    }else{
-                        this.works.body.sort(function(a,b){
-                            if(a.state.type > b.state.type)
-                                return -1;
-                            if(a.state.type < b.state.type)
-                                return 1;
-                            if(a.state.type == b.state.type)
-                                return 0;
-                        });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                        orderDes=true;
-                    }
-                    break;
-                case "typeTask":
-
-                    if(orderDes){
-
-                        this.works.body.sort(function(a,b){
-                            if(a.type < b.type)
-                                return -1;
-                            if(a.type > b.type)
-                                return 1;
-                            if(a.type == b.type)
-                                return 0;
-                        });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                        orderDes=false;
-                    }else{
-                        this.works.body.sort(function(a,b){
-                            if(a.type > b.type)
-                                return -1;
-                            if(a.type < b.type)
-                                return 1;
-                            if(a.type == b.type)
-                                return 0;
-                        });
-                        self.tasksBackup = self.works.body.slice((self.works.limit*self.works.offset.currentPage)-self.works.limit,(self.works.limit*self.works.offset.currentPage))
-                        orderDes=true;
-                    }
                     break;
 
+                case 'typeTask':
+                    tasks.sort(function(a,b){
+                        if(a.type < b.type)
+                            return -1;
+                        if(a.type > b.type)
+                            return 1;
+                        if(a.type == b.type)
+                            return 0;
+                    });
+                    break;
             }
+            self.WorksRootController.renderTasks(tasks);
+            orderDown=true;
         };
 
-        this.renderPages = function(){
+        let orderTasksUp =(tasks,action)=>{
+            switch(action){
 
+                case 'id':
+                    tasks.sort(function(a,b){
+                        if(a.cart.cart_id > b.cart.cart_id)
+                            return -1;
+                        if(a.cart.cart_id < b.cart.cart_id)
+                            return 1;
+                        if(a.cart.cart_id == b.cart.cart_id)
+                            return 0;
+                    });
+                    break;
+
+                case 'status':
+                    tasks.sort(function(a,b){
+                        if(a.cart.status > b.cart.status)
+                            return -1;
+                        if(a.cart.status < b.cart.status)
+                            return 1;
+                        if(a.cart.status == b.cart.status)
+                            return 0;
+                    });
+                    break;
+
+                case 'channel':
+                    tasks.sort(function(a,b){
+                        if(a.cart.source.channel > b.cart.source.channel)
+                            return -1;
+                        if(a.cart.source.channel < b.cart.source.channel)
+                            return 1;
+                        if(a.cart.source.channel == b.cart.source.channel)
+                            return 0;
+                    });
+                    break;
+
+                case 'country':
+                    tasks.sort(function(a,b){
+                        if(a.cart.source.country > b.cart.source.country)
+                            return -1;
+                        if(a.cart.source.country < b.cart.source.country)
+                            return 1;
+                        if(a.cart.source.country == b.cart.source.country)
+                            return 0;
+                    });
+                    break;
+
+                case 'agent':
+                    tasks.sort(function(a,b){
+                        if(a.state.user_id > b.state.user_id)
+                            return -1;
+                        if(a.state.user_id < b.state.user_id)
+                            return 1;
+                        if(a.state.user_id == b.state.user_id)
+                            return 0;
+                    });
+                    break;
+
+                case 'dateCreation':
+                    tasks.sort(function(a,b){
+                        if(a.cart.creation_date > b.cart.creation_date)
+                            return -1;
+                        if(a.cart.creation_date < b.cart.creation_date)
+                            return 1;
+                        if(a.cart.creation_date == b.cart.creation_date)
+                            return 0;
+                    });
+                    break;
+
+                case 'product':
+                    tasks.sort(function(a,b){
+                        if(a.cart.reservations[0].product > b.cart.reservations[0].product)
+                            return -1;
+                        if(a.cart.reservations[0].product < b.cart.reservations[0].product)
+                            return 1;
+                        if(a.cart.reservations[0].product == b.cart.reservations[0].product)
+                            return 0;
+                    });
+                    break;
+
+                case 'stage':
+                    tasks.sort(function(a,b){
+                        if(a.cart.stage > b.cart.stage)
+                            return -1;
+                        if(a.cart.stage < b.cart.stage)
+                            return 1;
+                        if(a.cart.stage == b.cart.stage)
+                            return 0;
+                    });
+                    break;
+
+                case 'availability':
+                    tasks.sort(function(a,b){
+                        if(a.state.type > b.state.type)
+                            return -1;
+                        if(a.state.type < b.state.type)
+                            return 1;
+                        if(a.state.type == b.state.type)
+                            return 0;
+                    });
+                    break;
+
+                case 'typeTask':
+                    tasks.sort(function(a,b){
+                        if(a.type > b.type)
+                            return -1;
+                        if(a.type < b.type)
+                            return 1;
+                        if(a.type == b.type)
+                            return 0;
+                    });
+                    break;
+            }
+            self.WorksRootController.renderTasks(tasks);
+            orderDown=false;
         };
 
-        this.confiPages = function(){
+        this.confiPages = ()=>{
 
             if(self.works){
                 let totalPages = self.works.offset.size;
                 let i=1;
                 while(i <= totalPages)
                 {
-                    self.pages.push(i);
+                    self.pagination.pages.push(i);
                     i++;
                 }
             }
         };
 
-        this.setPage = function(index){
+        this.setPage = (index)=>{
 
             self.works.offset.currentPage = index;
-            self.tasksBackup = self.works.body.slice((self.works.limit*index)-self.works.limit,(self.works.limit*index))
 
+            if(!self.WorksRootController.optimized){
+                self.tasksPaginated = self.works.body.slice((self.works.limit*index)-self.works.limit,(self.works.limit*index))
+            }else{
+                self.tasksPaginated = self.tasksFiltered.slice((self.works.limit*index)-self.works.limit,(self.works.limit*index))
+            }
 
         };
+
 
 
     }

@@ -1,3 +1,23 @@
+#refresh{
+  font-weight: bold;
+  float: right;
+  margin-bottom: 5px;
+  button{
+    font-size:15px;
+    border-radius: 10%;
+    color: #337ab7;
+    //background-color: #000000;
+    border: 1px black solid;
+  }
+  button:focus{
+    outline:none;
+  }
+  button:active{
+    background-color: #999999;
+    color: #204d74;
+  }
+}
+
 table.tasks{
   .id{
     width: 8%;
@@ -72,7 +92,17 @@ table.tasks{
     }
   }
 
-
+}
+.fa-circle-o-notch{
+  position: relative;
+  left: 48%;
+  font-size:32px;
+}
+.loading{
+    margin-top:5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
 }
 #msg-empty-list{
 

@@ -2536,7 +2536,7 @@ class workService {
                         reject(error);
                     }else {
                         let tasks = JSON.parse(body);
-                        let response = {
+                        /*let response = {
                             limit : pagination.limit,
                             offset :{
                                  currentPage: pagination.currentPage,
@@ -2544,18 +2544,18 @@ class workService {
                                  size: Math.ceil(tasks.body.length/pagination.limit),
                             },
                             body : tasks.body
-                        };
-                            fulfill(response);
+                        };*/
+                            fulfill(tasks);
                     }
                 });
         });
     }
-
+    /*
     static totalPages(limit){
         let totalItems = response.tasks.body.length;
         return Math.ceil(totalItems/limit);
     };
- /*   static getAll() {
+    static getAll() {
 
         const self = this;
 

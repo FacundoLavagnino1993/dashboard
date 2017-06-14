@@ -1,3 +1,1 @@
-.filterById
-    span Filtrar Id
-    input.setId(type="text" ng-model="$ctrl.filters._id" placeholder="Ingrese Id")
+input.inputStyle(type="text" ng-model="$ctrl.filters._id" ng-keyup="$ctrl.filtrarId($ctrl.filters._id)" placeholder="Ingrese Id")

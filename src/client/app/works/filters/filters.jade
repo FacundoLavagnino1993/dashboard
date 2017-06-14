@@ -1,6 +1,18 @@
 table#filters(class="table")
     thead
-        th Fitros
-    tbody
-        td.filterHeader
-            filter-by-id(filters="$ctrl.filters")
+        th Filtrar Id
+        th Filtrar Estado
+        th Flltrar Etapa
+        th Filtrar Disponibilidad
+        th Filtrar Fecha
+    tbody.filterHeader
+        td
+            filter-by-id(filters="$ctrl.filters" works="$ctrl.works" tasks-filtered='$ctrl.tasksFiltered')
+        td
+            filter-by-state(filters="$ctrl.filters" works="$ctrl.works" tasks-filtered='$ctrl.tasksFiltered')
+        td
+            filter-by-stage(filters="$ctrl.filters" works="$ctrl.works" tasks-filtered='$ctrl.tasksFiltered')
+        td
+            filter-by-availability(filters="$ctrl.filters" works="$ctrl.works" tasks-filtered='$ctrl.tasksFiltered')
+        td
+            filter-by-date(filters="$ctrl.filters" works="$ctrl.works" tasks-filtered='$ctrl.tasksFiltered')

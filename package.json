@@ -14,10 +14,8 @@
     "express": "^4.15.2",
     "gulp-concat": "^2.6.1",
     "moment": "^2.18.1",
-    "mongoose": "^4.9.3",
     "pug": "^2.0.0-beta11",
-    "request": "^2.81.0",
-    "underscore": "^1.8.3"
+    "request": "^2.81.0"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

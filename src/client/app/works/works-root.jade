@@ -1,8 +1,8 @@
 .container-fluid
     main.row.work-ctn
         section.work-header.col-md-12
-            filters(filters="$ctrl.filters" works="$ctrl.works")
-            work-list(works = '$ctrl.works' item-reserve='$ctrl.sendReserve($event)' filters="$ctrl.filters" list-empty='$ctrl.listIsEmpty()')
+            filters(filters="$ctrl.filters" works="$ctrl.works" tasks-filtered='$ctrl.tasksFiltered')
+            work-list(pagination='$ctrl.pagination' works='$ctrl.works' filters="$ctrl.filters" list-empty='$ctrl.listIsEmpty()' tasks-filtered='$ctrl.tasksFiltered' tasks-paginated='$ctrl.tasksPaginated')
 
 
 

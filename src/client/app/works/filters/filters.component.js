@@ -4,7 +4,12 @@
         .module('filters')
         .component('filters',{
             bindings:{
-              filters:'<'
+              filters:'<',
+              works:'<',
+              tasksFiltered:'<'
+            },
+            require:{
+                WorksRootController : '^worksRoot'
             },
             templateUrl: 'works/filters/filters.html',
         });
