@@ -1,1 +1,1 @@
-<select name="states" class="comboboxStyle"><option value="" disabled="disabled" selected="selected" style="display:none">ESTADOS</option><option value="error">ERROR</option><option value="manual">MANUAL</option><option value="pending">PENDING</option></select>
+<select name="state" ng-model="state" ng-change="$ctrl.filterState(state)" class="comboboxStyle"><option value="" disabled="disabled" selected="selected" style="display:none">ESTADOS</option><option value="error">ERROR</option><option value="manual">MANUAL</option><option value="pending">PENDING</option></select>

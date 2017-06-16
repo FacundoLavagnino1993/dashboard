@@ -24,9 +24,9 @@
                 pages:[]
             };
 
-            this.filters = {
+            /*this.filters = {
                 "_id": ""
-            };
+            };*/
 
             this.$onInit = ()=>{
                 _self.getTasks();
