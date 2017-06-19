@@ -1,7 +1,9 @@
-select.comboboxStyle(name='stage')
-    option(value='' disabled selected style="display:none;") ESTAPAS
+select.comboboxStyle(name='stage' ng-model="stage" ng-change="$ctrl.filterStage(stage)")
+    option(value='') ----
     option(value='booking') BOOKING
     option(value='bsp') BSP
     option(value='fraud') FRAUD
     option(value='invoice') INVOICE
     option(value='refund') REFUND
+    option(value='payment') PAYMENT
+    option(value='cancel') CANCEL

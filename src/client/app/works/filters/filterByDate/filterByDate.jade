@@ -1,3 +1,3 @@
-input.inputStyle.inputStyleDate(type="date" placeholder="Desde" )
-span &nbsp-&nbsp
-input.inputStyle.inputStyleDate(type="date" placeholder="Hasta" )
+input.inputStyle.inputStyleDate#dateFrom(type="date" placeholder="Desde" ng-model='from' ng-change='$ctrl.dateFrom(from)')
+span -
+input.inputStyle.inputStyleDate#dateTo(type="date" placeholder="Hasta" ng-model='to' ng-change='$ctrl.dateTo(to)')

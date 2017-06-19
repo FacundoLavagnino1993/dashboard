@@ -34,8 +34,8 @@ table.tasks(class="table table-hover")
     <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
     p.loading Cargando...
 .btn-group
-    button.back-next(type='button' class='btn btn-default' ng-disabled='$ctrl.works.offset.currentPage == 1' ng-click='$ctrl.setPage($ctrl.works.offset.currentPage - 1)') &laquo;
-    button(type='button' ng-repeat="page in $ctrl.pagination.pages track by $index" class='btn btn-default' ng-click="$ctrl.setPage(page)" ng-class="{active: $ctrl.works.offset.currentPage == page}") {{page}}
-    button.back-next(type='button' class='btn btn-default' ng-disabled='$ctrl.works.offset.currentPage >= $ctrl.works.offset.size' ng-click='$ctrl.setPage($ctrl.works.offset.currentPage + 1)') &raquo
+    button.back-next(type='button' class='btn btn-default' ng-disabled='$ctrl.works.offset.currentPage == 1' ng-click='$ctrl.WorksRootController.setPage($ctrl.works.offset.currentPage - 1)') &laquo;
+    button(type='button' ng-repeat="page in $ctrl.pagination.pages track by $index" class='btn btn-default' ng-click="$ctrl.WorksRootController.setPage(page)" ng-class="{active: $ctrl.works.offset.currentPage == page}") {{page}}
+    button.back-next(type='button' class='btn btn-default' ng-disabled='$ctrl.works.offset.currentPage >= $ctrl.works.offset.size' ng-click='$ctrl.WorksRootController.setPage($ctrl.works.offset.currentPage + 1)') &raquo
 
 

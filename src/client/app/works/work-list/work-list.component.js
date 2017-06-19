@@ -315,17 +315,7 @@
             }
         };
 
-        this.setPage = (index)=>{
 
-            self.works.offset.currentPage = index;
-
-            if(!self.WorksRootController.optimized){
-                self.tasksPaginated = self.works.body.slice((self.works.limit*index)-self.works.limit,(self.works.limit*index))
-            }else{
-                self.tasksPaginated = self.tasksFiltered.slice((self.works.limit*index)-self.works.limit,(self.works.limit*index))
-            }
-
-        };
 
 
 

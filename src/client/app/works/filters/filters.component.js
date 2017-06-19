@@ -18,40 +18,47 @@
 
             let self = this;
             this.filtered = false;
-            let result = [];
+            let idResult =[];
+            let stateResult =[];
+            let stageResult =[];
+            let availableResult =[];
+            let dateResult =[];
 
 
             this.sendTasks = (tasks, filterOf)=>{
 
-                tasks.forEach(function(element){
-                    self.tasksFiltered.push(element);
-                });
 
-
-
-               /* if(!self.filtered){
-
+                if(!self.filtered){
                     self.tasksFiltered = tasks;
                     this.filtered = true;
-                }*/
+                }
 
+                switch (filterOf){
 
-                /*switch (filterOf){
                     case 'id':
                             idResult = tasks;
                         break;
                     case 'state':
                             stateResult = tasks;
+                            console.log(stateResult.length);
                         break;
-
+                    case 'stage':
+                             stageResult = tasks;
+                        break;
+                    case 'availability':
+                             availableResult = tasks;
+                        break;
+                    case 'date':
+                             dateResult = tasks;
+                        break;
                 }
 
-                self.tasksFiltered.equals = (idResult,stateResult)=>{
-
-                }*/
 
 
-               // self.WorksRootController.renderTasks(self.tasksFiltered);
+
+                self.tasksFiltered = tasks;
+                self.WorksRootController.setPage(1);
+                self.WorksRootController.renderTasks(self.tasksFiltered);*/
                 self.works.offset.size = Math.ceil(self.tasksFiltered.length/self.works.limit);
             }
         }

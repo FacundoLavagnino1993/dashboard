@@ -1,1 +1,1 @@
-<select name="availability" class="comboboxStyle"><option value="" disabled="disabled" selected="selected" style="display:none">DISPONIBILIDAD</option><option value="available">AVAILABlE</option><option value="reserved">RESERVED</option><option value="snoozed">SNOOZED</option></select>
+<select name="availability" ng-model="availability" ng-change="$ctrl.filterAvailability(availability)" class="comboboxStyle"><option value="">----</option><option value="available">AVAILABlE</option><option value="reserved">RESERVED</option><option value="snoozed">SNOOZED</option></select>

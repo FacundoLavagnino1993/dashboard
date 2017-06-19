@@ -61,7 +61,7 @@
                     }, function fail(error){
                         console.log(error);
                     });
-            };;
+            };
 
             this.itemsListHandler = ()=>{
                 document.getElementById('msg-loading').style.display = "inline";
@@ -107,6 +107,18 @@
                     _self.tasksFiltered = tasks;
                     _self.optimized = true;
                 }
+            };
+
+            this.setPage = (index)=>{
+                _self.pagination.pages = [];
+                _self.works.offset.currentPage = index;
+
+                if(!_self.optimized){
+                    _self.tasksPaginated = _self.works.body.slice((_self.works.limit*index)-_self.works.limit,(_self.works.limit*index))
+                }else{
+                    _self.tasksPaginated = _self.tasksFiltered.slice((_self.works.limit*index)-_self.works.limit,(_self.works.limit*index))
+                }
+
             };
             /*
              this.worksPaginated = function(data){
