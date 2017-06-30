@@ -5,8 +5,7 @@
         .component('filterById', {
             controller: filterByIdController,
             bindings: {
-                works:'<',
-                tasksFiltered:'<'
+                works:'<'
             },
             require:{
                 WorksRootController : '^worksRoot',
@@ -17,16 +16,10 @@
 
         function filterByIdController(){
             let self = this;
-
+            let tasks = [];
             this.filtrarId = (id)=>{
 
-                let tasks= self.works.body.filter(function (item) {
-                    if (item.cart.cart_id.toLowerCase().indexOf(id.toLowerCase()) != -1)
-                        return item;
-                });
-
-                self.FiltersController.sendTasks(tasks,'id');
-
+                self.FiltersController.sendTasks('id',id);
 
             };
 

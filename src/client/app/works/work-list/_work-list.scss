@@ -6,7 +6,6 @@
     font-size:15px;
     border-radius: 10%;
     color: #337ab7;
-    //background-color: #000000;
     border: 1px black solid;
   }
   button:focus{
@@ -19,35 +18,42 @@
 }
 
 table.tasks{
+  table-layout: fixed;
+  td{
+    overflow: hidden;
+  }
   .id{
+
     width: 8%;
   }
   .stateTask{
-    width: 8%;
+
+    width: 7%;
   }
   .channel{
-    width: 7%;
+
+    width: 5%;
   }
   .country{
     width: 5%;
   }
   .user{
-    width: 9%;
+    width: 13%;
   }
   .date{
     width: 12%;
   }
   .availability{
-    width: 15%;
+    width: 12%;
   }
   .stage{
-    width: 8%;
+    width: 7%;
   }
   .product{
     width: 12%;
   }
   .typeTask{
-    width: 17%;
+    width: 18%;
   }
   .reserve{
     float: right;
@@ -91,7 +97,9 @@ table.tasks{
       color: #ffffff;
     }
   }
-
+  td{
+    height: 40px;
+  }
 }
 .fa-circle-o-notch{
   position: relative;
@@ -117,17 +125,40 @@ table.tasks{
     margin: 10px auto;
   }
 }
-.btn-group{
-  margin-left: 40%;
-  margin-right: 20%;
-  padding:5px;
-  .btn.back-next{
-      background-color: #dff0d8;
-      color: black;
+
+#paginator{
+  text-align: center;
+  padding: 0 auto;
+  .btn-group{
+    margin: 0 auto;
+    button{
+      background-color: white;
+      border:none;
+      width: 38px;
+      height: 36px;
+      margin: 0 2px;
+      font-weight: bold;
+      transition: background-color .8s;
+      &:focus{
+        outline:none;
+      }
+      &.active{
+        color: #2e6da4;
+        border-bottom: 2px solid #2e6da4;
+        transition: background-color .8s;
+      }
+      &:hover{
+        color: #888888;
+      }
+      &:disabled{
+        color: #999999;
+      }
+    }
+
   }
-  .btn.active{
-    background-color: #dff0d8;
-    color: black;
-    transition: background-color .8s;
-  }
+
+
+
+
+
 }

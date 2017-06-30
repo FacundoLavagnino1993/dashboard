@@ -5,8 +5,7 @@
         .component('filterByDate',{
             controller:filterByDateController,
             bindings: {
-                works:'<',
-                tasksFiltered:'<'
+                works:'<'
             },
             require:{
                 WorksRootController : '^worksRoot',
@@ -18,13 +17,13 @@
     function filterByDateController(){
         let self = this;
         let _from = null;
-        let _to = null;
+        let _to = moment()._d;
 
         this.filterByDate = ()=>{
 
             let tasks;
 
-            if(_from === null || _to === null){
+           /* if(_from === null || _to === null){
 
                 tasks = self.works.body;
             }else{
@@ -34,8 +33,14 @@
                         return item;
                 });
 
-            }
-            self.FiltersController.sendTasks(tasks,'date');
+            }*/
+
+            let date = {
+                _from,
+                _to
+            };
+            console.log(date);
+            self.FiltersController.sendTasks('date',date);
 
         };
 

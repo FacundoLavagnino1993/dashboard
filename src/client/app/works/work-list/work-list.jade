@@ -33,9 +33,13 @@ table.tasks(class="table table-hover")
 #msg-loading
     <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
     p.loading Cargando...
-.btn-group
-    button.back-next(type='button' class='btn btn-default' ng-disabled='$ctrl.works.offset.currentPage == 1' ng-click='$ctrl.WorksRootController.setPage($ctrl.works.offset.currentPage - 1)') &laquo;
-    button(type='button' ng-repeat="page in $ctrl.pagination.pages track by $index" class='btn btn-default' ng-click="$ctrl.WorksRootController.setPage(page)" ng-class="{active: $ctrl.works.offset.currentPage == page}") {{page}}
-    button.back-next(type='button' class='btn btn-default' ng-disabled='$ctrl.works.offset.currentPage >= $ctrl.works.offset.size' ng-click='$ctrl.WorksRootController.setPage($ctrl.works.offset.currentPage + 1)') &raquo
-
+#paginator(ng-if="$ctrl.pagination.pages != 0")
+    .btn-group
+        button(type='button' ng-disabled='$ctrl.works.offset.currentPage == 1' ng-click='$ctrl.works.offset.currentPage = 1; $ctrl.WorksRootController.comboPages = 1; $ctrl.WorksRootController.confiPages(); $ctrl.WorksRootController.setPage(1);') Inicio
+        button.back-next(type='button' ng-disabled='$ctrl.works.offset.currentPage == 1' ng-click='$ctrl.WorksRootController.setPage($ctrl.works.offset.currentPage - 1)') &laquo;
+        button(type='button' ng-if="$ctrl.WorksRootController.comboPages != 1") ...
+        button(type='button' ng-repeat="page in $ctrl.pagination.pages track by $index" ng-click="$ctrl.WorksRootController.setPage(page)" ng-class="{active: $ctrl.works.offset.currentPage == page}") {{page}}
+        button(type='button' ng-if="$ctrl.WorksRootController.comboPages != $ctrl.WorksRootController.limitComboPages") ...
+        button.back-next(type='button' ng-disabled='$ctrl.works.offset.currentPage >= $ctrl.works.offset.size' ng-click='$ctrl.WorksRootController.setPage($ctrl.works.offset.currentPage + 1)') &raquo
+        button(type='button' ng-disabled='$ctrl.works.offset.currentPage == $ctrl.works.offset.size' ng-click='$ctrl.works.offset.currentPage = $ctrl.works.offset.size; $ctrl.WorksRootController.comboPages = $ctrl.WorksRootController.limitComboPages; $ctrl.WorksRootController.confiPages();$ctrl.WorksRootController.setPage($ctrl.works.offset.size);') Fin
 

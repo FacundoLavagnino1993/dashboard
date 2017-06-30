@@ -4,7 +4,7 @@ const PORT = 8080;
 const bodyParser = require('body-parser');
 const path = require('path');
 //
-//ver request x express
+
 
 // API routes Async
 app.use('/static', express.static('./build'));

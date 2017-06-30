@@ -12,25 +12,33 @@
         function WorksRootController(workService){
 
             let _self = this;
+
+
+
+
+
             this.data = {currentPage : 1};
             this.loading = true;
             this.optimized = false;
             this.tasksPaginated=[];
             this.tasksFiltered=[];
+            this.comboPages = 1;
+
 
             this.pagination = {
                 limit: 10,
                 currentPage: 1,
+                size: 10,
                 pages:[]
             };
 
-            /*this.filters = {
-                "_id": ""
-            };*/
 
             this.$onInit = ()=>{
                 _self.getTasks();
+
+
             };
+
 
 
             this.renderTasks = (tasks)=>{
@@ -55,6 +63,7 @@
                             },
                             body : res.body
                         };
+
                         _self.loading = false;
                         _self.itemsListHandler();
                         _self.renderTasks(_self.works.body);
@@ -103,7 +112,7 @@
             };
 
             this.optimazerTasksMemory = (tasks)=>{
-                if(tasks.length < _self.works.body.length){
+                if(tasks.length <= _self.works.body.length){
                     _self.tasksFiltered = tasks;
                     _self.optimized = true;
                 }
@@ -113,13 +122,61 @@
                 _self.pagination.pages = [];
                 _self.works.offset.currentPage = index;
 
+
                 if(!_self.optimized){
                     _self.tasksPaginated = _self.works.body.slice((_self.works.limit*index)-_self.works.limit,(_self.works.limit*index))
                 }else{
                     _self.tasksPaginated = _self.tasksFiltered.slice((_self.works.limit*index)-_self.works.limit,(_self.works.limit*index))
                 }
 
+
             };
+
+            this.confiPages = ()=>{
+
+
+                if(_self.works){
+
+                    let totalPages = _self.works.offset.size;
+                    _self.limitComboPages = Math.ceil(totalPages/_self.pagination.size);
+
+                    let sizePaginator =[];
+                    let i=1;
+                    while(i <= totalPages)
+                    {
+                        sizePaginator.push(i);
+                        i++;
+                    }
+
+                    if(_self.works.offset.currentPage > (_self.pagination.size*_self.comboPages)){
+                        _self.comboPages++;
+
+                    }
+
+                    if(_self.comboPages != 1 && _self.works.offset.currentPage === (_self.pagination.size*_self.comboPages - _self.pagination.size)){
+
+                        _self.comboPages--;
+                    }
+
+                    _self.pagination.pages = sizePaginator.slice((_self.pagination.size*_self.comboPages)-_self.pagination.size,(_self.pagination.size*_self.comboPages));
+                    console.log('work' + _self.works.offset.size);
+                    /*
+                    let totalPages = _self.works.offset.size;
+                    let key = Math.ceil(totalPages/_self.pagination.size);
+                    let offsetPages = 1;
+
+                    let i=1;
+                    while(i <= totalPages)
+                    {
+                        _self.pagination.pages.push(i);
+                        i++;
+                    }
+*/
+
+                }
+            };
+
+
             /*
              this.worksPaginated = function(data){
              _self.data = data;

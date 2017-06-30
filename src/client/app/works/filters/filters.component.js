@@ -5,8 +5,7 @@
         .component('filters',{
             controller:FiltersController,
             bindings:{
-              works:'<',
-              tasksFiltered:'<'
+              works:'<'
             },
             require:{
                 WorksRootController : '^worksRoot'
@@ -17,49 +16,69 @@
         function FiltersController(){
 
             let self = this;
-            this.filtered = false;
-            let idResult =[];
-            let stateResult =[];
-            let stageResult =[];
-            let availableResult =[];
-            let dateResult =[];
 
+            let id = '';
+            let status = '';
+            let stage = '';
+            let available = '';
+            let _from = null;
+            let _to = moment()._d;
+            let date= {
+                _from,
+                _to
+            };
+            let tasks;
 
-            this.sendTasks = (tasks, filterOf)=>{
+            this.sendTasks = (key, value)=>{
 
-
-                if(!self.filtered){
-                    self.tasksFiltered = tasks;
-                    this.filtered = true;
-                }
-
-                switch (filterOf){
+                switch (key){
 
                     case 'id':
-                            idResult = tasks;
+                        id = value;
                         break;
                     case 'state':
-                            stateResult = tasks;
-                            console.log(stateResult.length);
+                        status = value;
                         break;
                     case 'stage':
-                             stageResult = tasks;
+                        stage = value;
                         break;
                     case 'availability':
-                             availableResult = tasks;
+                        available = value;
                         break;
                     case 'date':
-                             dateResult = tasks;
+                        date = value;
                         break;
                 }
 
 
+                tasks = self.works.body.filter((item)=>{
 
+                    if((item.cart.cart_id.toLowerCase().indexOf(id.toLowerCase()) != -1)
+                        &&
+                        (item.cart.status.toLowerCase().indexOf(status.toLowerCase()) != -1)
+                        &&
+                        (item.cart.stage.toLowerCase().indexOf(stage.toLowerCase()) != -1)
+                        &&
+                        (item.state.type.toLowerCase().indexOf(available.toLowerCase()) != -1)){
+                        if(date._from === null){
+                            return item;
+                        }
+                        else if((moment(item.cart.creation_date) >= moment(date._from))&&(moment(item.cart.creation_date) <= moment(date._to))){
+                            return item;
+                        }
+                    }
+                });
 
-                self.tasksFiltered = tasks;
                 self.WorksRootController.setPage(1);
-                self.WorksRootController.renderTasks(self.tasksFiltered);*/
-                self.works.offset.size = Math.ceil(self.tasksFiltered.length/self.works.limit);
+                self.WorksRootController.comboPages = 1;
+                self.WorksRootController.confiPages();
+                self.works.offset.size = Math.ceil(tasks.length/self.works.limit);
+                console.log('filter' + self.works.offset.size);
+                self.WorksRootController.renderTasks(tasks);
+
+
             }
+
+
         }
 })();

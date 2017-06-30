@@ -35,11 +35,15 @@
         let orderDown = false;
         //paginator
         this.currentPage = 0;
+        let sizeReload = false;
+        let sizePages =[];
 
 
         this.$onChanges = ()=>{
 
-            self.confiPages();
+            self.WorksRootController.confiPages();
+
+
         };
 
         this.refreshPage = ()=>{
@@ -305,13 +309,36 @@
         this.confiPages = ()=>{
 
             if(self.works){
+
                 let totalPages = self.works.offset.size;
+                let key = Math.ceil(totalPages/self.pagination.size);
+                let offsetPages = 1;
+
                 let i=1;
                 while(i <= totalPages)
                 {
                     self.pagination.pages.push(i);
                     i++;
                 }
+
+                if(!sizeReload){
+                    let i=1;
+                    while(i <= totalPages)
+                    {
+                        sizePages.push(i);
+                        i++;
+                    }
+                    sizeReload = true;
+                }
+
+                self.pagination.pages = sizePages.slice((self.pagination.size*offsetPages)-self.pagination.size,(self.pagination.size*offsetPages));
+
+
+
+
+
+
+
             }
         };
 

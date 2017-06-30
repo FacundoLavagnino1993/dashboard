@@ -2535,6 +2535,7 @@ class workService {
                     if (error){
                         reject(error);
                     }else {
+
                         let tasks = JSON.parse(body);
                         /*let response = {
                             limit : pagination.limit,
@@ -2545,6 +2546,7 @@ class workService {
                             },
                             body : tasks.body
                         };*/
+
                             fulfill(tasks);
                     }
                 });

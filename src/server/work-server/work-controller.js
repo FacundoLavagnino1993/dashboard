@@ -14,7 +14,7 @@ class workController{
             });
 
     }
-
+/*
     static getWorksPaginated(req,res){
 
         worksService.getPaginationResult(req)
@@ -24,7 +24,7 @@ class workController{
             .catch((err)=>{
                 res.statusCode(err.code);
             });
-    }
+    }*/
 
    /* static postReserve(req,res){
         worksService.Reserve(req)
