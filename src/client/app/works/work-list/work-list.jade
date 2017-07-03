@@ -31,8 +31,8 @@ table.tasks(class="table table-hover")
 #msg-empty-list
     p El ID ingresado no se encuentra en el registro.
 #msg-loading
-    <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
-    p.loading Cargando...
+    <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+
 #paginator(ng-if="$ctrl.pagination.pages != 0")
     .btn-group
         button(type='button' ng-disabled='$ctrl.works.offset.currentPage == 1' ng-click='$ctrl.works.offset.currentPage = 1; $ctrl.WorksRootController.comboPages = 1; $ctrl.WorksRootController.confiPages(); $ctrl.WorksRootController.setPage(1);') Inicio

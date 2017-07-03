@@ -101,10 +101,14 @@ table.tasks{
     height: 40px;
   }
 }
-.fa-circle-o-notch{
-  position: relative;
-  left: 48%;
-  font-size:32px;
+#msg-loading{
+
+  .fa-refresh{
+    color:#337ab7;
+    position: relative;
+    left: 48%;
+    font-size:32px;
+  }
 }
 .loading{
     margin-top:5px;
@@ -120,7 +124,7 @@ table.tasks{
     text-align: center;
     padding: 8px;
     border: 1px solid #2e6da4;
-    background-color: rgba(223,240,216,1);
+    background-color: #f2eff7;
     width:50%;
     margin: 10px auto;
   }

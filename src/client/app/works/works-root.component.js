@@ -12,7 +12,7 @@
         function WorksRootController(workService){
 
             let _self = this;
-
+            let utc = 3600000 * 3;
 
 
 
@@ -94,7 +94,6 @@
                 if(!(document.getElementById('element')) && !(_self.loading)){
                     _self.listEmpty = true;
                     document.getElementById('msg-empty-list').style.display = "inline";
-
                 }else{
                     document.getElementById('msg-empty-list').style.display = "none";
 
@@ -103,11 +102,23 @@
 
             this.release_timer_snoozed = (element)=> {
 
+
                 if(element.state.type === 'SNOOZED'){
-                    document.getElementById(element.cart.cart_id)
-                        .innerHTML = moment(moment(element.state.release_time) - moment()).format('h:mm:ss');
-                }else{
-                    return;
+
+                    let now = moment();
+                    let then = moment(element.state.release_time);
+
+                    let diffTime = then - now + utc;
+                    if(diffTime >= 3600000){
+                        document.getElementById(element.cart.cart_id)
+                               .innerHTML = moment(diffTime).format('kk:mm:ss');
+                    }else if(diffTime < 3600000 && diffTime > 0){
+                        document.getElementById(element.cart.cart_id)
+                            .innerHTML = moment(diffTime).format('mm:ss');
+                    }else{
+                        _self.changeDisTasks(element.cart.cart_id);
+                    }
+
                 }
             };
 
@@ -117,6 +128,11 @@
                     _self.optimized = true;
                 }
             };
+
+            this.changeDisTasks = (id)=>{
+
+            };
+
 
             this.setPage = (index)=>{
                 _self.pagination.pages = [];
@@ -159,19 +175,6 @@
                     }
 
                     _self.pagination.pages = sizePaginator.slice((_self.pagination.size*_self.comboPages)-_self.pagination.size,(_self.pagination.size*_self.comboPages));
-                    console.log('work' + _self.works.offset.size);
-                    /*
-                    let totalPages = _self.works.offset.size;
-                    let key = Math.ceil(totalPages/_self.pagination.size);
-                    let offsetPages = 1;
-
-                    let i=1;
-                    while(i <= totalPages)
-                    {
-                        _self.pagination.pages.push(i);
-                        i++;
-                    }
-*/
 
                 }
             };

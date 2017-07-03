@@ -12,9 +12,96 @@ class workService {
             "currentPage":1};
     };
 
-  //  static tasks(){
-       /* let tasks =  {
-            "body": [ {
+    static tasks() {
+        let tasks = {
+            "body": [{
+                "id": 40343,
+                "cart": {
+                    "reservations": [
+                        {
+                            "product": "HOTEL",
+                            "status": "ERROR",
+                            "refunds": [],
+                            "payments": [
+                                {
+                                    "type": "CREDIT_CARD",
+                                    "provider": "ALMUNDO"
+                                }
+                            ],
+                            "from_date": "2017-07-29T00:00:00",
+                            "to_date": "2017-08-08T00:00:00",
+                            "refundable": false,
+                            "reservation_id": "a087b12d-348f-44ce-855d-ace26444aa8e"
+                        },
+                        {
+                            "pnr": "Q57GLO",
+                            "product": "FLIGHT",
+                            "status": "ERROR",
+                            "refunds": [],
+                            "payments": [
+                                {
+                                    "type": "CREDIT_CARD",
+                                    "provider": "ALMUNDO"
+                                },
+                                {
+                                    "type": "CREDIT_CARD",
+                                    "provider": "ALMUNDO"
+                                },
+                                {
+                                    "type": "CREDIT_CARD",
+                                    "provider": "ALMUNDO"
+                                },
+                                {
+                                    "type": "CREDIT_CARD",
+                                    "provider": "ALMUNDO"
+                                },
+                                {
+                                    "type": "CREDIT_CARD",
+                                    "provider": "ALMUNDO"
+                                }
+                            ],
+                            "from_date": "2017-07-28T12:45:00",
+                            "to_date": "2017-08-09T11:05:00",
+                            "expiration_date": "2017-07-04T09:02:00",
+                            "validating_carrier": "LA",
+                            "reservation_id": "a667e7f3-3484-4ac8-add1-668224d36b84"
+                        },
+                        {
+                            "pnr": "ARG|1317380|4|13|2017-07-28|2017-08-09",
+                            "product": "TRAVEL_ASSISTANCE",
+                            "status": "ERROR",
+                            "refunds": [],
+                            "payments": [
+                                {
+                                    "type": "CREDIT_CARD",
+                                    "provider": "ALMUNDO"
+                                }
+                            ],
+                            "from_date": "2017-07-28T00:00:00",
+                            "to_date": "2017-08-09T00:00:00",
+                            "reservation_id": "801ff396-0256-4a39-9f95-6cd8d544a4a5"
+                        }
+                    ],
+                    "stage": "PAYMENT",
+                    "status": "ERROR",
+                    "substatus": "TC_REJECTED",
+                    "creation_date": "2017-07-03T12:03:22",
+                    "source": {
+                        "channel": "WEB",
+                        "country": "ARG",
+                        "brand": "ALMUNDO"
+                    },
+                    "cart_id": "J4O-3J3-KZZ"
+                },
+                "type": "COLLECTION_RECOVERY_CC_REJECTED",
+                "state": {
+                    "@class": "com.almundo.tasques.api.model.state.Snoozed",
+                    "type": "SNOOZED",
+                    "user_id": "218080",
+                    "release_time": "2017-07-04T17:51:00"
+                },
+                "creation_date": "2017-07-03T12:03:36.137Z"
+            },{
                 "id": 15,
                 "cart": {
                     "reservations": [
@@ -2513,21 +2600,14 @@ class workService {
                     },
                     "creation_date": "2017-06-08T17:34:33.113Z"
                 }
-            ]};
-        return tasks;*/
-    /*   workService.apiTasks()
-           .then((data)=>{
-           return {
-                   "pagination" :workService.pagination(),
-                   "tasks" : data,
-               };
-       }).catch((err)=>{
-           res.status(err.code);
-       })
-    }*/
+            ]
+        };
+        return tasks;
+    }
 
+/*
     static apiTasks(){
-        let pagination = workService.pagination();
+
         return new Promise((fulfill, reject) => {
             request('http://api.almundo.it:8080/api/tasques/tasks',
                 {headers: {'X-Apikey': '5512c8d59932b3da984cc7de'}},
@@ -2537,20 +2617,20 @@ class workService {
                     }else {
 
                         let tasks = JSON.parse(body);
-                        /*let response = {
-                            limit : pagination.limit,
-                            offset :{
-                                 currentPage: pagination.currentPage,
-                                 bodyLength: tasks.body.length,
-                                 size: Math.ceil(tasks.body.length/pagination.limit),
-                            },
-                            body : tasks.body
-                        };*/
 
                             fulfill(tasks);
                     }
                 });
         });
+    }*/
+
+    static apiTasks(){
+
+        return new Promise((fulfill, reject) => {
+            let tasks = workService.tasks();
+                fulfill(tasks);
+                });
+     //   });
     }
     /*
     static totalPages(limit){
@@ -2627,23 +2707,24 @@ class workService {
             fulfill(self.responsePaginated());
         })
     }*/
-   /* static Reserve(reserve){
+        static changeTasksToDis(data){
+            return new Promise((fulfill, reject) => {
+                request('http://apist.almundo.it:8080/api/tasques/tasks/release',
+                    {method:'POST',
+                     body: data,
+                     headers: {'X-Apikey': '5512c8d59932b3da984cc7de'},
+                     json: true
+                    },
+                    function (error, res, body) {
+                        if (error){
+                            reject(error);
+                        }else {
 
-        return new Promise((fulfill,reject) =>{
-            request('http://apist.almundo.it:8080/api/tasques/tasks/reserve',{
-                method:'POST',
-                body: reserve.body.reserve,
-                headers : {'X-Apikey': '5512c8d59932b3da984cc7de', 'Content-Type' : 'application/json'},
-                json: true
-            },(error, res, body)=>{
-                if(error)
-                    reject(error);
-
-                fulfill(body);
-            })
-        })
-
-    }*/
+                            fulfill(body);
+                        }
+                    });
+            });
+        }
 }
 
 module.exports = workService;
