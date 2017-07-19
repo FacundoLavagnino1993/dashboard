@@ -18,5 +18,14 @@
                  });
          };
 
+        /* this.releaseTasksService = function(data){
+             return $http.put('/release',data)
+                 .then(function (res){
+                     return res.data;
+                 }, function (err){
+                    return err;
+             })
+         };*/
+
      }
 })();

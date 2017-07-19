@@ -1,1 +1,1 @@
-input.inputStyle(type="text" ng-model="id" ng-keyup="$ctrl.filtrarId(id)" placeholder="Ingrese Id")
+input.inputStyle(id='id' type="text" ng-model="id" ng-keyup="$ctrl.filtrarId(id)" placeholder="Ingrese Id" ng-disabled="!$ctrl.works")

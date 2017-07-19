@@ -2605,11 +2605,11 @@ class workService {
         return tasks;
     }
 
-/*
+
     static apiTasks(){
 
         return new Promise((fulfill, reject) => {
-            request('http://api.almundo.it:8080/api/tasques/tasks',
+            request('http://apidv.almundo.it:8080/api/tasques/tasks',
                 {headers: {'X-Apikey': '5512c8d59932b3da984cc7de'}},
                 function (error, res, body) {
                     if (error){
@@ -2622,96 +2622,26 @@ class workService {
                     }
                 });
         });
-    }*/
+    }
 
-    static apiTasks(){
+   /* static apiTasks(){
 
         return new Promise((fulfill, reject) => {
             let tasks = workService.tasks();
                 fulfill(tasks);
                 });
      //   });
-    }
-    /*
-    static totalPages(limit){
-        let totalItems = response.tasks.body.length;
-        return Math.ceil(totalItems/limit);
-    };
-    static getAll() {
-
-        const self = this;
-
-            let response ={
-                "pagination" : workService.pagination(),
-                "tasks" : workService.tasks()
-            };
-
-            this.responsePaginated = ()=>{
-                console.log(response);
-                return {
-                    limit: response.pagination.limit,
-                    offset: {
-                        currentPage: response.pagination.currentPage,
-                        size: workService.totalPages(response.pagination.limit)
-                    },
-                    body: response.tasks.body
-                }
-            };
-
-        return new Promise((fulfill,reject)=>{
-            fulfill(self.responsePaginated());
-        })
     }*/
 
-   /* static getPaginationResult(data){
 
-        const self = this;
-        this.works = workService.tasks();
-        this.works.pagination.currentPage = data.body.currentPage;
-
-         return new Promise((fulfill, reject) => {
-
-         request('http://api.almundo.it:8080/api/tasques/tasks',
-         {headers: {'X-Apikey': '5512c8d59932b3da984cc7de'}},
-         function (error, res, body) {
-         if (error){
-         reject(error);
-         }else {
-         fulfill(body);
-         }
-         });
-         });
-
-        this.responsePaginated = ()=>{
-
-            return {
-                limit: self.works.pagination.limit,
-                offset: {
-                    currentPage: self.works.pagination.currentPage,
-                    size: self.totalPages(self.works.pagination.limit)
-                },
-                body: self.elementsPaginated(self.works.pagination.limit,self.works.pagination.currentPage)
-            }
-        };
-
-        this.totalPages = (limit)=>{
-            let totalItems = self.works.body.length;
-            return Math.ceil(totalItems/limit);
-        };
-
-        this.elementsPaginated = (limit,page)=>{
-            return self.works.body.slice((limit*page)-limit,(limit*page))
-        };
-
-        return new Promise((fulfill,reject)=>{
-            fulfill(self.responsePaginated());
-        })
-    }*/
-        static changeTasksToDis(data){
+        static releaseTasks(data){
             return new Promise((fulfill, reject) => {
-                request('http://apist.almundo.it:8080/api/tasques/tasks/release',
-                    {method:'POST',
-                     body: data,
+                request('http://apist.almundo.it:8080/api/tasques/tasks/data.id',
+                    {method:'PUT',
+                     body: {
+                         "user_id":data.user_id,
+                         "event_type": "RELEASE"
+                     },
                      headers: {'X-Apikey': '5512c8d59932b3da984cc7de'},
                      json: true
                     },
@@ -2719,8 +2649,7 @@ class workService {
                         if (error){
                             reject(error);
                         }else {
-
-                            fulfill(body);
+                            fulfill(data);
                         }
                     });
             });

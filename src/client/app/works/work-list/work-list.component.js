@@ -13,7 +13,7 @@
               pagination : '<'
             },
             require:{
-                WorksRootController : '^worksRoot'
+                WorksRootController : '^worksRoot',
             },
             templateUrl: "works/work-list/work-list.html"
         })
@@ -26,9 +26,9 @@
                  }
         });
 
-    ListController.$inject = ['$scope'];
 
-    function ListController($scope) {
+
+    function ListController() {
 
         let self = this;
         //orderList
@@ -305,44 +305,6 @@
             self.WorksRootController.renderTasks(tasks);
             orderDown=false;
         };
-
-        this.confiPages = ()=>{
-
-            if(self.works){
-
-                let totalPages = self.works.offset.size;
-                let key = Math.ceil(totalPages/self.pagination.size);
-                let offsetPages = 1;
-
-                let i=1;
-                while(i <= totalPages)
-                {
-                    self.pagination.pages.push(i);
-                    i++;
-                }
-
-                if(!sizeReload){
-                    let i=1;
-                    while(i <= totalPages)
-                    {
-                        sizePages.push(i);
-                        i++;
-                    }
-                    sizeReload = true;
-                }
-
-                self.pagination.pages = sizePages.slice((self.pagination.size*offsetPages)-self.pagination.size,(self.pagination.size*offsetPages));
-
-
-
-
-
-
-
-            }
-        };
-
-
 
 
 

@@ -2,13 +2,24 @@
 @import "filterByState/filterByState";
 @import "filterByDate/filterByDate";
 
+
+
 table#filters{
   margin-bottom: 5px;
+  #resetFilters{
+    color: white;
+    background-color: #337ab7;
+    padding-top: 2px;
+    float:right;
+    border-radius: 5%;
+    border:1px white solid;
+    font-size: smaller;
+    &:active{
+      background-color: rgba(51, 122, 183, 0.78);
+    }
+  }
   tbody{
-
-
     .inputStyle{
-
       height: 28px;
       width: 100px;
       font-size: 12px;

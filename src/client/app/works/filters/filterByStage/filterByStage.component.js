@@ -8,7 +8,6 @@
                 works:'<'
             },
             require:{
-                WorksRootController : '^worksRoot',
                 FiltersController : '^filters'
             },
             templateUrl: 'works/filters/filterByStage/filterByStage.html'
@@ -19,7 +18,7 @@
         let self = this;
 
         this.filterStage = (stage)=>{
-            self.FiltersController.sendTasks('stage',stage);
+            self.FiltersController.setValues('stage',stage);
         }
     }
 })();

@@ -15,6 +15,16 @@ class workController{
 
     }
 /*
+    static releaseTasksController(req,res){
+        WorksSerive.releaseTasks(req)
+            .then((data)=>{
+                res.json(data)
+            })
+            .catch((err)=>{
+                res.status(err.code).json(err);
+            })
+    }*/
+/*
     static getWorksPaginated(req,res){
 
         worksService.getPaginationResult(req)

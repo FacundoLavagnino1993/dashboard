@@ -19,26 +19,25 @@
 
 table.tasks{
   table-layout: fixed;
+
   td{
     overflow: hidden;
   }
   .id{
-
-    width: 8%;
+    width: 11%;
   }
   .stateTask{
 
     width: 7%;
   }
   .channel{
-
     width: 5%;
   }
   .country{
     width: 5%;
   }
   .user{
-    width: 13%;
+    width: 10%;
   }
   .date{
     width: 12%;

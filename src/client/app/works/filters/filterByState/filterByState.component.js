@@ -8,7 +8,6 @@
                 works:'<'
             },
             require:{
-                WorksRootController : '^worksRoot',
                 FiltersController : '^filters'
             },
             templateUrl: 'works/filters/filterByState/filterByState.html'
@@ -20,7 +19,7 @@
 
             this.filterState = (status)=> {
 
-                self.FiltersController.sendTasks('state',status);
+                self.FiltersController.setValues('state',status);
 
             }
 

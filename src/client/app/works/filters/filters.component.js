@@ -13,7 +13,9 @@
             templateUrl: 'works/filters/filters.html',
         });
 
-        function FiltersController(){
+        FiltersController.$inject = ['workService'];
+
+        function FiltersController(workService){
 
             let self = this;
 
@@ -29,10 +31,65 @@
             };
             let tasks;
 
-            this.sendTasks = (key, value)=>{
+            this.refreshPage = ()=>{
+
+                self.WorksRootController.loading = true;
+                self.WorksRootController.tasksPaginated = [];
+                //self.pagination.pages = [];
+                document.getElementById('paginator').style.display = "none";
+                document.getElementById('msg-loading').style.display = "inline";
+                workService.getWorks()
+                .then(function done(res){
+                    self.WorksRootController.works = {
+                        limit : self.WorksRootController.pagination.limit,
+                        offset :{
+                            currentPage: self.WorksRootController.pagination.currentPage,
+                            bodyLength: res.body.length,
+                            size: Math.ceil(res.body.length/self.WorksRootController.pagination.limit),
+                        },
+                        body : res.body
+                    };
+                    document.getElementById('paginator').style.display = "inline";
+                    self.works = self.WorksRootController.works;
+                    self.WorksRootController.loading = false;
+                    self.WorksRootController.itemsListHandler();
+                    self.sendTasks();
+
+
+                }, function fail(error){
+                    console.log(error);
+                });
+
+            };
+
+            this.resetFilter = ()=>{
+
+                document.getElementById("id").value='';
+                document.getElementById("state").value='';
+                document.getElementById("stage").value='';
+                document.getElementById("availability").value='';
+                document.getElementById("dateFrom").value='';
+                document.getElementById("dateTo").value='';
+                self.setValues('reset','');
+            };
+
+            this.sendTasks = ()=>{
+
+                tasks = self.filterTasks();
+
+                self.WorksRootController.setPage(1);
+                self.WorksRootController.comboPages = 1;
+                self.WorksRootController.confiPages();
+                self.works.offset.size = Math.ceil(tasks.length/self.works.limit);
+
+                self.WorksRootController.renderTasks(tasks);
+
+
+            };
+
+            this.setValues = (key,value)=>{
 
                 switch (key){
-
                     case 'id':
                         id = value;
                         break;
@@ -48,8 +105,20 @@
                     case 'date':
                         date = value;
                         break;
+                    case 'reset':
+                        id = value;
+                        status = value;
+                        stage = value;
+                        available = value;
+                        date._from = null;
+                        break;
+
                 }
 
+                self.sendTasks();
+            };
+
+            this.filterTasks = ()=>{
 
                 tasks = self.works.body.filter((item)=>{
 
@@ -69,16 +138,7 @@
                     }
                 });
 
-                self.WorksRootController.setPage(1);
-                self.WorksRootController.comboPages = 1;
-                self.WorksRootController.confiPages();
-                self.works.offset.size = Math.ceil(tasks.length/self.works.limit);
-                console.log('filter' + self.works.offset.size);
-                self.WorksRootController.renderTasks(tasks);
-
-
+                return tasks;
             }
-
-
         }
 })();

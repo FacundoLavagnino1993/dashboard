@@ -8,7 +8,6 @@
                 works:'<'
             },
             require:{
-                WorksRootController : '^worksRoot',
                 FiltersController : '^filters'
             },
             templateUrl: 'works/filters/filterByAvailability/filterByAvailability.html'
@@ -20,7 +19,7 @@
 
         this.filterAvailability = (availability)=>{
 
-            self.FiltersController.sendTasks('availability',availability);
+            self.FiltersController.setValues('availability',availability);
 
         }
     }

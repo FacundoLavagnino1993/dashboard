@@ -4,18 +4,15 @@
         .module('works')
         .component('worksRoot', {
             controller: WorksRootController,
-            templateUrl: "works/works-root.html"
+            templateUrl: "works/works-root.html",
             });
 
-    WorksRootController.$inject = ['workService','$scope'];
+    WorksRootController.$inject = ['workService'];
 
         function WorksRootController(workService){
 
             let _self = this;
             let utc = 3600000 * 3;
-
-
-
 
             this.data = {currentPage : 1};
             this.loading = true;
@@ -35,11 +32,7 @@
 
             this.$onInit = ()=>{
                 _self.getTasks();
-
-
             };
-
-
 
             this.renderTasks = (tasks)=>{
                 _self.pagination.pages = [];
@@ -70,7 +63,25 @@
                     }, function fail(error){
                         console.log(error);
                     });
+
+
+
             };
+
+            this.releaseTasks = (task)=>{
+                let data = {
+                    "id": task.cart.cart_id,
+                    "user_id": task.state.user_id
+                };
+
+            /*    workService.releaseTasksService(data)
+                    .then(function done(res){
+                        return true;
+                    },function fail(err){
+                        console.log(err);
+                    })*/
+            };
+
 
             this.itemsListHandler = ()=>{
                 document.getElementById('msg-loading').style.display = "inline";
@@ -78,9 +89,7 @@
                     document.getElementById('msg-loading').style.display = "none";
                     setInterval(()=>{
                         angular.forEach(_self.works.body, function (element) {
-                            if(document.getElementById(element.cart.cart_id) === null){
-                                return;
-                            }else{
+                            if(document.getElementById(element.cart.cart_id) !== null){
                                 _self.release_timer_snoozed(element);
                             }
                         });
@@ -108,7 +117,7 @@
                     let now = moment();
                     let then = moment(element.state.release_time);
 
-                    let diffTime = then - now + utc;
+                    let diffTime = then - now - utc;
                     if(diffTime >= 3600000){
                         document.getElementById(element.cart.cart_id)
                                .innerHTML = moment(diffTime).format('kk:mm:ss');
@@ -116,7 +125,9 @@
                         document.getElementById(element.cart.cart_id)
                             .innerHTML = moment(diffTime).format('mm:ss');
                     }else{
-                        _self.changeDisTasks(element.cart.cart_id);
+
+                        _self.releaseTasks(element) === true ? element.state.type = 'AVAILABLE': false;
+
                     }
 
                 }
@@ -129,9 +140,6 @@
                 }
             };
 
-            this.changeDisTasks = (id)=>{
-
-            };
 
 
             this.setPage = (index)=>{

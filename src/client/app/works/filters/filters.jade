@@ -5,6 +5,7 @@ table#filters(class="table")
         th Flltrar Etapa
         th Filtrar Disponibilidad
         th Filtrar Fecha
+            button(id="resetFilters" type="button" ng-click="$ctrl.resetFilter()" ng-disabled="!$ctrl.works") RESET
     tbody.filterHeader
         td
             filter-by-id( works="$ctrl.works" )
@@ -16,3 +17,5 @@ table#filters(class="table")
             filter-by-availability(works="$ctrl.works" )
         td
             filter-by-date(works="$ctrl.works" )
+span#refresh Actualizar&nbsp
+    button(type="button" ng-click="$ctrl.refreshPage()") <i class="fa fa-refresh" aria-hidden="true"></i>

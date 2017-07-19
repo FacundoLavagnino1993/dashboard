@@ -1,5 +1,5 @@
-select.comboboxStyle(name='availability' ng-model='availability' ng-change="$ctrl.filterAvailability(availability)")
-    option(value='') ----
+select.comboboxStyle(id='availability' name='availability' ng-model='availability' ng-change="$ctrl.filterAvailability(availability)" ng-disabled="!$ctrl.works")
+    option(value='') -- Todas --
     option(value='available') AVAILABlE
     option(value='reserved') RESERVED
     option(value='snoozed') SNOOZED

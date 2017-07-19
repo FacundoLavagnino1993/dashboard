@@ -1,9 +1,11 @@
-select.comboboxStyle(name='stage' ng-model="stage" ng-change="$ctrl.filterStage(stage)")
-    option(value='') ----
+select.comboboxStyle(id='stage' name='stage' ng-model="stage" ng-change="$ctrl.filterStage(stage)" ng-disabled="!$ctrl.works")
+    option(value='') -- Todas --
     option(value='booking') BOOKING
     option(value='bsp') BSP
+    option(value='cancel') CANCEL
     option(value='fraud') FRAUD
     option(value='invoice') INVOICE
-    option(value='refund') REFUND
+    option(value='issue') ISSUE
     option(value='payment') PAYMENT
-    option(value='cancel') CANCEL
+    option(value='refund') REFUND
+
