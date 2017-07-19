@@ -33,11 +33,14 @@
 
             this.refreshPage = ()=>{
 
-                self.WorksRootController.loading = true;
                 self.WorksRootController.tasksPaginated = [];
-                //self.pagination.pages = [];
-                document.getElementById('paginator').style.display = "none";
+                self.WorksRootController.loading = true;
+
                 document.getElementById('msg-loading').style.display = "inline";
+                if((document.getElementById('paginator')))
+                    document.getElementById('paginator').style.display = "none";
+
+
                 workService.getWorks()
                 .then(function done(res){
                     self.WorksRootController.works = {
@@ -49,11 +52,17 @@
                         },
                         body : res.body
                     };
-                    document.getElementById('paginator').style.display = "inline";
+
                     self.works = self.WorksRootController.works;
+                    self.sendTasks();
+
+                    if(self.WorksRootController.tasksPaginated >0)
+                        document.getElementById('paginator').style.display = "inline";
+
+
                     self.WorksRootController.loading = false;
                     self.WorksRootController.itemsListHandler();
-                    self.sendTasks();
+
 
 
                 }, function fail(error){

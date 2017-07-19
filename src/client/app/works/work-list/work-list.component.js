@@ -46,13 +46,6 @@
 
         };
 
-        this.refreshPage = ()=>{
-            self.pagination.pages = [];
-            self.tasksPaginated = [];
-            self.works = [];
-            document.getElementById('msg-loading').style.display = "inline";
-            self.WorksRootController.getTasks();
-        };
 
         this.itemIsEmpty = (item)=>{
 

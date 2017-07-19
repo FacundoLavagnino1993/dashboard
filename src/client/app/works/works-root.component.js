@@ -101,7 +101,7 @@
             this.listIsEmpty = ()=>{
 
                 if(!(document.getElementById('element')) && !(_self.loading)){
-                    _self.listEmpty = true;
+
                     document.getElementById('msg-empty-list').style.display = "inline";
                 }else{
                     document.getElementById('msg-empty-list').style.display = "none";
